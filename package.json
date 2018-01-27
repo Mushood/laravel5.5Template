@@ -19,6 +19,7 @@
         "vue": "^2.5.7"
     },
     "dependencies": {
+        "vue-slick": "^1.1.12",
         "vue-sweetalert2": "^1.2.4",
         "vue2-editor": "^2.3.11"
     }

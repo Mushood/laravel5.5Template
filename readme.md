@@ -11,6 +11,7 @@ This is a custom template that I use to kickstart a new project. Included are de
 *** NPM packages
 - SweetAlert: https://www.npmjs.com/package/vue-sweetalert2
 - vue2editor: https://github.com/davidroyer/vue2-editor
+- slider: https://github.com/staskjs/vue-slick
 
 *** Admin designs
 - Laravel Backpack: https://github.com/Laravel-Backpack/Base :: included skins as well, to change as required.
