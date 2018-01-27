@@ -10,8 +10,8 @@ This is a custom template that I use to kickstart a new project. Included are de
 
 *** NPM packages ***
 - SweetAlert: https://www.npmjs.com/package/vue-sweetalert2
-- vue2editor: https://github.com/davidroyer/vue2-editor
-- slider: https://github.com/staskjs/vue-slick
+- Text Editor: https://github.com/davidroyer/vue2-editor
+- Slider: https://github.com/staskjs/vue-slick
 
 *** Admin designs ***
 - Laravel Backpack: https://github.com/Laravel-Backpack/Base :: included skins as well, to change as required.
@@ -26,6 +26,16 @@ To change skin:
 - Vue.js is used as a front-end framework to add reactivity to the project. The required packages are included
 - A custom file uploader is used in the project. However, it is in the components folder instead of the node_modules folder since I often find myself modifying its functionality
 
+
+*** Code Snippets ***
+When working on a project, I often have the same code repeated for my entities. Hence I include in my template a list of frequently used code to speed up my workflow. Here are the list of included files:
+- AdminEntityController
+- EntityController
+- Entity
+- Entity Migration
+- Entity Blade: index, create, show
+- Entity VueJS: list, create, show
+- Entity routes
 
 
 ## About Laravel
