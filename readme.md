@@ -1,15 +1,16 @@
 <p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
 
 ## Custom Template
+This is a custom template that I use to kickstart a new project. I include the designs, composer packages and npm packages that I use frequently.
 
---Composer Packages used
-Sluggable: https://github.com/cviebrock/eloquent-sluggable
-Role & Permissions: https://github.com/spatie/laravel-permission
-Image: http://image.intervention.io/
+*** Composer Packages used
+- Sluggable: https://github.com/cviebrock/eloquent-sluggable
+- Role & Permissions: https://github.com/spatie/laravel-permission
+- Image: http://image.intervention.io/
 
---NPM packages
-SweetAlert: https://www.npmjs.com/package/vue-sweetalert2
-vue2editor: https://github.com/davidroyer/vue2-editor
+*** NPM packages
+- SweetAlert: https://www.npmjs.com/package/vue-sweetalert2
+- vue2editor: https://github.com/davidroyer/vue2-editor
 
 
 ## About Laravel
