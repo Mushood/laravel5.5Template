@@ -30,5 +30,6 @@
         >
         </entitylist>
     @endforeach
+    {{$entitys->links()}}
 </div>
 @endsection
