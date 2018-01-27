@@ -13,5 +13,6 @@
     "/js/pace.min.js": "/js/pace.min.js",
     "/js/jquery.slimscroll.min.js": "/js/jquery.slimscroll.min.js",
     "/js/fastclick.js": "/js/fastclick.js",
-    "/js/backpackapp.min.js": "/js/backpackapp.min.js"
+    "/js/backpackapp.min.js": "/js/backpackapp.min.js",
+    "/js/jquery-3.1.1.min.js": "/js/jquery-3.1.1.min.js"
 }

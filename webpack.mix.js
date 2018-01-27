@@ -28,3 +28,4 @@ mix.copy('resources/assets/js/pace.min.js', 'public/js/pace.min.js');
 mix.copy('resources/assets/js/jquery.slimscroll.min.js', 'public/js/jquery.slimscroll.min.js');
 mix.copy('resources/assets/js/fastclick.js', 'public/js/fastclick.js');
 mix.copy('resources/assets/js/backpackapp.min.js', 'public/js/backpackapp.min.js');
+mix.copy('resources/assets/js/jquery-3.1.1.min.js', 'public/js/jquery-3.1.1.min.js');
