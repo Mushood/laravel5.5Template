@@ -1,0 +1,17 @@
+{
+    "/js/app.js": "/js/app.js",
+    "/css/app.css": "/css/app.css",
+    "/css/admin.css": "/css/admin.css",
+    "/js/admin.js": "/js/admin.js",
+    "/css/bootstrap.min.css": "/css/bootstrap.min.css",
+    "/css/AdminLTE.min.css": "/css/AdminLTE.min.css",
+    "/css/skin-purple.min.css": "/css/skin-purple.min.css",
+    "/css/pace.min.css": "/css/pace.min.css",
+    "/css/backpack.base.css": "/css/backpack.base.css",
+    "/css/pnotify.custom.min.css": "/css/pnotify.custom.min.css",
+    "/js/bootstrap.min.js": "/js/bootstrap.min.js",
+    "/js/pace.min.js": "/js/pace.min.js",
+    "/js/jquery.slimscroll.min.js": "/js/jquery.slimscroll.min.js",
+    "/js/fastclick.js": "/js/fastclick.js",
+    "/js/backpackapp.min.js": "/js/backpackapp.min.js"
+}

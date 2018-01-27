@@ -13,4 +13,6 @@ yarn-error.log
 composer.lock
 package-lock.json
 /public/images/*
-
+/public/css/*
+/public/js/*
+/public/fonts/*
