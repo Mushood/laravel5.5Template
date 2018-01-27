@@ -3,23 +3,30 @@
 ## Custom Template
 This is a custom template that I use to kickstart a new project. Included are designs, composer packages and npm packages that I use frequently.
 
-*** Composer Packages used
+*** Composer Packages used ***
 - Sluggable: https://github.com/cviebrock/eloquent-sluggable
 - Role & Permissions: https://github.com/spatie/laravel-permission
 - Image: http://image.intervention.io/
 
-*** NPM packages
+*** NPM packages ***
 - SweetAlert: https://www.npmjs.com/package/vue-sweetalert2
 - vue2editor: https://github.com/davidroyer/vue2-editor
 - slider: https://github.com/staskjs/vue-slick
 
-*** Admin designs
+*** Admin designs ***
 - Laravel Backpack: https://github.com/Laravel-Backpack/Base :: included skins as well, to change as required.
+- An initial layout is set using the navbar from bootstrap 3.3.7 required in app.scss
 
 To change skin: 
 - Change skin in layout.blade.php
 - Change copy command in webpack.mix.js
 - command: rpm run dev/watch/production
+
+*** Front end framework ***
+- Vue.js is used as a front-end framework to add reactivity to the project. The required packages are included
+- A custom file uploader is used in the project. However, it is in the components folder instead of the node_modules folder since I often find myself modifying its functionality
+
+
 
 ## About Laravel
 
