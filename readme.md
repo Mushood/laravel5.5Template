@@ -1,7 +1,7 @@
 <p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
 
 ## Custom Template
-This is a custom template that I use to kickstart a new project. I include the designs, composer packages and npm packages that I use frequently.
+This is a custom template that I use to kickstart a new project. Included are designs, composer packages and npm packages that I use frequently.
 
 *** Composer Packages used
 - Sluggable: https://github.com/cviebrock/eloquent-sluggable
