@@ -9,7 +9,6 @@ Vue.use(VueEditor);
 window.Event = new Vue();
 
 Vue.component('multiplefileuploader', require('./components/fileuploader.vue'));
-Vue.component('vueeditora', VueEditor);
 
 const app = new Vue({
     el: '#admin',
