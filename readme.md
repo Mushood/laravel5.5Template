@@ -15,6 +15,11 @@ This is a custom template that I use to kickstart a new project. I include the d
 *** Admin designs
 - Laravel Backpack: https://github.com/Laravel-Backpack/Base :: included skins as well, to change as required.
 
+To change skin: 
+- Change skin in layout.blade.php
+- Change copy command in webpack.mix.js
+- command: rpm run dev/watch/production
+
 ## About Laravel
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as:
