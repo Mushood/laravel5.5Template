@@ -98,7 +98,58 @@ class CreateEntity extends Command
         $this->files = [
             'route' => [
                 'source' => base_path('snippets/routes.php') ,
+                'directory' => base_path('routes'),
                 'destination' => base_path('routes/' . $this->pluralLowerCase . '.php')
+            ],
+            'model' => [
+                'source' => base_path('snippets/Entity.php') ,
+                'directory' => base_path('app/Models'),
+                'destination' => base_path('app/Models/' . $this->singularFirstUpper . '.php')
+            ],
+            'migration' => [
+                'source' => base_path('snippets/2017_11_09_110801_create_entitys_table.php') ,
+                'directory' => base_path('database/migrations'),
+                'destination' => base_path('database/migrations/2017_11_09_110801_create_' . $this->pluralLowerCase . '_table.php')
+            ],
+            'controller' => [
+                'source' => base_path('snippets/controller/EntityController.php') ,
+                'directory' => base_path('app/Http/Controllers'),
+                'destination' => base_path('app/Http/Controllers/' . $this->singularFirstUpper . 'Controller.php')
+            ],
+            'admin_controller' => [
+                'source' => base_path('snippets/controller/AdminEntityController.php') ,
+                'directory' => base_path('app/Http/Controllers/Admin'),
+                'destination' => base_path('app/Http/Controllers/Admin/Admin' . $this->singularFirstUpper . 'Controller.php')
+            ],
+            'view_show' => [
+                'source' => base_path('snippets/views/entity/front/show.blade.php') ,
+                'directory' => base_path('resources/views/' . $this->singularLowerCase ),
+                'destination' => base_path('resources/views/' . $this->singularLowerCase . '/show.blade.php')
+            ],
+            'admin_create' => [
+                'source' => base_path('snippets/views/entity/admin/create.blade.php') ,
+                'directory' => base_path('resources/views/admin/' . $this->singularLowerCase ),
+                'destination' => base_path('resources/views/admin/' . $this->singularLowerCase . '/create.blade.php')
+            ],
+            'admin_index' => [
+                'source' => base_path('snippets/views/entity/admin/index.blade.php') ,
+                'directory' => base_path('resources/views/admin/' . $this->singularLowerCase ),
+                'destination' => base_path('resources/views/admin/' . $this->singularLowerCase . '/index.blade.php')
+            ],
+            'view_show_js' => [
+                'source' => base_path('snippets/views/entity/front/show.vue') ,
+                'directory' => base_path('resources/assets/js/components/' . $this->singularLowerCase ),
+                'destination' => base_path('resources/assets/js/components/' . $this->singularLowerCase . '/show.vue')
+            ],
+            'admin_create_js' => [
+                'source' => base_path('snippets/views/entity/admin/create.vue') ,
+                'directory' => base_path('resources/assets/js/components/' . $this->singularLowerCase ),
+                'destination' => base_path('resources/assets/js/components/' . $this->singularLowerCase . '/create.vue')
+            ],
+            'admin_index_js' => [
+                'source' => base_path('snippets/views/entity/admin/list.vue') ,
+                'directory' => base_path('resources/assets/js/components/' . $this->singularLowerCase ),
+                'destination' => base_path('resources/assets/js/components/' . $this->singularLowerCase . '/list.vue')
             ],
         ];
     }
@@ -131,6 +182,9 @@ class CreateEntity extends Command
         foreach ($this->files as $file){
             if(!\File::exists($file['destination'])){
                 $index++;
+            }
+            if(!\File::isDirectory($file['directory'])){
+                File::makeDirectory($file['directory']);
             }
         }
 
