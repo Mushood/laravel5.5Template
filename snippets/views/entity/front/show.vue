@@ -9,6 +9,7 @@
             <a class="btn btn-success" :href="route_back">Back</a>
         </div>
     </div>
+</div>
 </template>
 
 <script>
