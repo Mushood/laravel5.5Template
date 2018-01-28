@@ -5,7 +5,7 @@
       <h1>Preview Entity</h1>
       <h3 v-if="entity.title">{{entity.title}}</h3>
       <p v-if="entity.body" v-html="entity.body"></p>
-      <img :src="route_image + entity.image.name" class="img-responsive col-md-10" alt="image" v-if="entity.image.name"/>
+      <img :src="route_image + entity.image" class="img-responsive col-md-10" alt="image" v-if="entity.image"/>
     </div>
     <div class="col-md-6">
       <h1>Write Entity</h1>
@@ -25,12 +25,12 @@
       <div class="row">
         <div class="form-group">
           <label for="image">Image</label>
-          <select  name='image' v-model="entity.image.name">
+          <select  name='image' v-model="entity.image">
             <option value="upload">Upload a new picture</option>
             <option v-for="picture in pictures" :value="picture.value">{{picture.name}}</option>
           </select>
         </div>
-        <div class="row" v-if="entity.image.name == 'upload'">
+        <div class="row" v-if="entity.image == 'upload'">
           <multiplefileuploader
             :posturl="route_image_create"
             method="post"
@@ -157,20 +157,22 @@
           },
 
           setup: function(){
-            const vm = this;
-            axios.get(vm.route_setup, {
+              /*
+              const vm = this;
+              axios.get(vm.route_setup, {
 
-            })
-            .then(function (response) {
+              })
+              .then(function (response) {
 
-              if(response.data.code == 200){
+                  if(response.data.code == 200){
 
-              }
+                  }
 
-            })
-            .catch(function (error) {
-              vm.errors = error.response.data;
-            });
+              })
+              .catch(function (error) {
+                  vm.errors = error.response.data;
+              });
+              */
           }
 
         },
