@@ -5,7 +5,7 @@
       <h1>Preview Entity</h1>
       <h3 v-if="entity.title">{{entity.title}}</h3>
       <p v-if="entity.body" v-html="entity.body"></p>
-      <img :src="route_image + entity.image" class="img-responsive col-md-10" alt="image" v-if="entity.image"/>
+      <img :src="route_image + '/' + entity.image" class="img-responsive col-md-10" alt="image" v-if="entity.image"/>
     </div>
     <div class="col-md-6">
       <h1>Write Entity</h1>
