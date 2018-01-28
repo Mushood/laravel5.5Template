@@ -49,7 +49,7 @@ class AdminEntityController extends Controller
           $entity = new Entity();
         }
 
-        $entity->image_id = $requestEntity['image'];
+        $entity->image_id = $request->pictureId;
         $entity->name = $requestEntity['title'];
         $entity->body = $requestEntity['body'];
         $entity->order = 0;
