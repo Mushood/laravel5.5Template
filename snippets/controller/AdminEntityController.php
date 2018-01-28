@@ -79,7 +79,6 @@ class AdminEntityController extends Controller
           $uploadedImage = new Image();
           $uploadedImage->name = $filename;
           $uploadedImage->alt = $filename;
-          $uploadedImage->category_id = 1;
           $uploadedImage->save();
         }
 
