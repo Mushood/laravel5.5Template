@@ -1,7 +1,7 @@
 <template>
   <div class="entityblock">
     <div class="col-lg-4 col-md-2 col-sm-2 col-xs-12">
-        <img :src="route_image+ entity.image.name" :alt="entity.image.name" class="img-responsive">
+        <img :src="route_image + '/' + entity.image.name" :alt="entity.image.name" class="img-responsive">
     </div>
     <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
         <h3>{{entity.name}}</h3>
