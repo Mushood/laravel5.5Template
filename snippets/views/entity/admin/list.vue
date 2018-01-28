@@ -1,10 +1,10 @@
 <template>
   <div class="entityblock">
     <div class="col-lg-4 col-md-2 col-sm-2 col-xs-12">
-        <img :src="'/images/entitys/'+ entity.image.name" alt="" class="img-responsive">
+        <img :src="route_image+ entity.image.name" :alt="entity.image.name" class="img-responsive">
     </div>
     <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-        <h3> {{entity.name}}</h3>
+        <h3>{{entity.name}}</h3>
         <span v-html="entity.body.substring(0,600)"></span>
         <div class="row" v-if="is_admin">
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
@@ -18,7 +18,6 @@
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12" v-if="entity.isPublished">
                 <button class="btn btn-primary btn-block" @click.prevent="unpublish">Unpublish</button>
             </div>
-
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12" v-else>
                 <button class="btn btn-success btn-block" @click.prevent="publish">Publish</button>
             </div>
@@ -48,6 +47,9 @@
             route_show: {
                 required: false,
             },
+            route_image: {
+                required: true,
+            },
             route_edit: {
                 required: false,
             },
@@ -71,8 +73,7 @@
 
         data() {
           return {
-
-            errors: {}
+            errors: {},
           };
         },
 
