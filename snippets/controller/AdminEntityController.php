@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Image;
 use Intervention\Image\ImageManager;
 use Carbon\Carbon;
+use App\Models\Entity;
 
 class AdminEntityController extends Controller
 {
