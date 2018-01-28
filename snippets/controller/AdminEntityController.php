@@ -43,14 +43,14 @@ class AdminEntityController extends Controller
     {
         $requestEntity = $request->entity;
         if(isset($requestEntity->id)){
-          $entity = Entity::findOrFail(requestEntity->id);
+          $entity = Entity::findOrFail($requestEntity->id);
         } else {
           $entity = new Entity();
         }
 
-        $entity->image_id = requestEntity->id->image;
-        $entity->name = requestEntity->id->title;
-        $entity->body = requestEntity->id->body;
+        $entity->image_id = $requestEntity->id->image;
+        $entity->name = $requestEntity->id->title;
+        $entity->body = $requestEntity->id->body;
         $entity->order = 0;
         $entity->save();
 
