@@ -49,9 +49,9 @@ class AdminEntityController extends Controller
           $entity = new Entity();
         }
 
-        $entity->image_id = $requestEntity->id->image;
-        $entity->name = $requestEntity->id->title;
-        $entity->body = $requestEntity->id->body;
+        $entity->image_id = $requestEntity['image'];
+        $entity->name = $requestEntity['title'];
+        $entity->body = $requestEntity['body'];
         $entity->order = 0;
         $entity->save();
 
