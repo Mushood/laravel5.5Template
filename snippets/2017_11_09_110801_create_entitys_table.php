@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateEntitiesTable extends Migration
+class CreateEntitysTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateEntitiesTable extends Migration
      */
     public function up()
     {
-        Schema::create('entities', function (Blueprint $table) {
+        Schema::create('entitys', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('image_id')->unsigned();
             $table->foreign('image_id')->references('id')->on('images');
@@ -22,9 +22,9 @@ class CreateEntitiesTable extends Migration
             $table->integer('order');
             //allows ordering of entity if required
             $table->boolean('active')->default(false);
-            //allows setting the entity to active to not to be able to filter
+            //allows setting the entity to active to be able to filter
             $table->softDeletes();
-            //allows soft deleting of entity/home/mushood/work/lovelife/resources/views/admin/testimonial
+            //allows soft deleting of entity
             $table->timestamps();
         });
     }
@@ -36,6 +36,6 @@ class CreateEntitiesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('entities');
+        Schema::dropIfExists('entitys');
     }
 }
