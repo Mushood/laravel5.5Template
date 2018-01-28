@@ -18,7 +18,7 @@ class AdminEntityController extends Controller
     {
       $entitys = Entity::latest()->with('image')->paginate(12);
 
-      return view('admin.entity.index', compact('entitys','categories'));
+      return view('admin.entity.index', compact('entitys'));
     }
 
     /**
@@ -91,30 +91,6 @@ class AdminEntityController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Entity $entity)
-    {
-        $categories = Category::all();
-
-        return view('admin.entity.show', compact('entity','categories'));
-    }
-
-    public function view(Entity $entity)
-    {
-      $image = $entity->image;
-      if($entity != null){
-        return response()->json([
-            'code' => 200,
-            'entity' => $entity
-        ]);
-      }
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -122,9 +98,7 @@ class AdminEntityController extends Controller
      */
     public function edit(Entity $entity)
     {
-      $categories = Category::all();
-
-      return view('admin.entity.create', compact('entity','categories'));
+      return view('admin.entity.create', compact('entity'));
     }
 
     /**
