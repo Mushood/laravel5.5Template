@@ -127,53 +127,52 @@
           },
 
           delete_entity: function(e) {
-            const vm = this;
+              const vm = this;
 
-            Vue.swal({
-              title: 'Are you sure?',
-              text: "You won't be able to revert this!",
-              type: 'warning',
-              showCancelButton: true,
-              confirmButtonColor: '#3085d6',
-              cancelButtonColor: '#d33',
-              confirmButtonText: 'Yes, delete it!',
-              cancelButtonText: 'No, cancel!',
-              confirmButtonClass: 'btn btn-success',
-              cancelButtonClass: 'btn btn-danger',
-              buttonsStyling: false
-            }).then(function () {
-              axios.delete(vm.route_delete , {
+              Vue.swal({
+                  title: 'Are you sure?',
+                  text: "You won't be able to revert this!",
+                  type: 'warning',
+                  showCancelButton: true,
+                  confirmButtonColor: '#3085d6',
+                  cancelButtonColor: '#d33',
+                  confirmButtonText: 'Yes, delete it!',
+                  cancelButtonText: 'No, cancel!',
+                  confirmButtonClass: 'btn btn-success',
+                  cancelButtonClass: 'btn btn-danger',
+                  buttonsStyling: false
+                  reverseButtons: true
+              }).then((result) = > {
+                  if(result.value)
+                      {
+                          axios.delete(vm.route_delete , {
 
-              })
-              .then(function (response) {
+                          })
+                              .then(function (response) {
 
-                  if(response.data.code == 200){
+                                  if(response.data.code == 200){
+                                      Vue.swal(
+                                          'Deleted!',
+                                          'Your entity has been deleted.',
+                                          'success'
+                                      );
+
+                                  }
+                                  location.reload();
+
+                              })
+                              .catch(function (error) {
+
+                              });
+                      }
+                  else if (result.dismiss === 'cancel') {
                       Vue.swal(
-                        'Deleted!',
-                        'Your entity has been deleted.',
-                        'success'
-                      );
-
+                          'Cancelled',
+                          'Your entity is safe :)',
+                          'error'
+                      )
                   }
-                  location.reload();
-
-              })
-              .catch(function (error) {
-
-              });
-
-            }, function (dismiss) {
-              // dismiss can be 'cancel', 'overlay',
-              // 'close', and 'timer'
-              if (dismiss === 'cancel') {
-                Vue.swal(
-                  'Cancelled',
-                  'Your entity is safe :)',
-                  'error'
-                )
-              }
-            })
-          }
+          })
 
         },
     }
