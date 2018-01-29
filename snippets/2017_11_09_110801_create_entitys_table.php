@@ -17,7 +17,7 @@ class CreateEntitysTable extends Migration
             $table->increments('id');
             $table->integer('image_id')->unsigned();
             $table->foreign('image_id')->references('id')->on('images');
-            $table->string('name');
+            $table->string('title');
             $table->text('body');
             $table->integer('order');
             //allows ordering of entity if required
