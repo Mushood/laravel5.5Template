@@ -43,8 +43,8 @@ class AdminEntityController extends Controller
     public function store(Request $request)
     {
         $requestEntity = $request->entity;
-        if(isset($requestEntity->id)){
-          $entity = Entity::findOrFail($requestEntity->id);
+        if(isset($requestEntity['id'])){
+          $entity = Entity::findOrFail($requestEntity['id']);
         } else {
           $entity = new Entity();
         }

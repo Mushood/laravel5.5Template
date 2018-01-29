@@ -115,12 +115,8 @@
         methods : {
           submitForm: function() {
             const vm = this;
-            var url = "";
-            if(this.edit > 0){
-                url = this.route_entity_update;
-            } else {
-                url = this.route_entity_submit;
-            }
+            var url = this.route_entity_submit;
+
             axios.post(url, {
                 entity: vm.entity,
                 pictureId: vm.pictureId,
