@@ -15,7 +15,7 @@
             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                 <button class="btn btn-danger btn-block" @click.prevent="delete_entity">Delete</button>
             </div>
-            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12" v-if="entity.active">
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12" v-if="active">
                 <button class="btn btn-primary btn-block" @click.prevent="unpublish">Unpublish</button>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12" v-else>
@@ -37,6 +37,7 @@
     export default {
         mounted() {
             console.log('Component list entity mounted.');
+            this.active = this.entity.active;
         },
 
         props: {
@@ -72,9 +73,10 @@
         },
 
         data() {
-          return {
-            errors: {},
-          };
+            return {
+                errors: {},
+                active: false,
+            };
         },
 
         methods : {
@@ -94,6 +96,7 @@
                 });
 
                 vm.entity.active = !vm.entity.active;
+                vm.active = vm.entity.active;
               }
 
 
@@ -118,6 +121,7 @@
                     });
 
                     vm.entity.active = !vm.entity.active;
+                    vm.active = vm.entity.active;
                 }
 
             })
