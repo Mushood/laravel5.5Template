@@ -73,6 +73,12 @@ class CreateEntity extends Command
         }
 
         $this->info("Boilerplate created for {$this->singularLowerCase}!");
+
+        $this->info("Running composer dump autoload!");
+        exec('composer dump-autoload');
+
+        $this->info("Recompiling js!");
+        exec('npm run dev');
     }
 
     private function initialiseNameVariables($name)
