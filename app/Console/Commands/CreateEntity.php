@@ -136,6 +136,11 @@ class CreateEntity extends Command
                 'directory' => base_path('resources/views/admin/' . $this->singularLowerCase ),
                 'destination' => base_path('resources/views/admin/' . $this->singularLowerCase . '/index.blade.php')
             ],
+            'index' => [
+                'source' => base_path('snippets/views/entity/front/index.blade.php') ,
+                'directory' => base_path('resources/views/' . $this->singularLowerCase ),
+                'destination' => base_path('resources/views/' . $this->singularLowerCase . '/index.blade.php')
+            ],
             'view_show_js' => [
                 'source' => base_path('snippets/views/entity/front/show.vue') ,
                 'directory' => base_path('resources/assets/js/components/' . $this->singularLowerCase ),
