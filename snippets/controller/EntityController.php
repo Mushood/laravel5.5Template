@@ -28,7 +28,7 @@ class EntityController extends Controller
      */
     public function show($slug)
     {
-        $entity = Entity::where('slug', $slug)->first();
+        $entity = Entity::where('slug', $slug)->with('image')->first();
 
         return view('entity.show', compact('entity'));
     }
