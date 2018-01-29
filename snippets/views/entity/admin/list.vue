@@ -15,7 +15,7 @@
             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                 <button class="btn btn-danger btn-block" @click.prevent="delete_entity">Delete</button>
             </div>
-            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12" v-if="entity.isPublished">
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12" v-if="entity.active">
                 <button class="btn btn-primary btn-block" @click.prevent="unpublish">Unpublish</button>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12" v-else>
@@ -93,10 +93,7 @@
                   confirmButtonText: 'Cool'
                 });
 
-                var result = vm.entitys.data.filter(function( obj ) {
-                  return obj.id == e.target.id;
-                });
-                result[0].isPublished = !result[0].isPublished;
+                vm.entity.active = true;
               }
 
 
@@ -120,10 +117,7 @@
                       confirmButtonText: 'Cool'
                     });
 
-                    var result = vm.entitys.data.filter(function( obj ) {
-                      return obj.id == e.target.id;
-                    });
-                    result[0].isPublished = !result[0].isPublished;
+                    vm.entity.active = false;
                 }
 
             })
