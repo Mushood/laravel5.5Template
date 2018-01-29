@@ -21,6 +21,7 @@
   @else
     <entitystudio
             edit="{{$entity->id}}"
+            :original="{{$entity}}"
             route_image="{{url('/images/entitys')}}"
             route_image_create="{{route('entity.image.upload')}}"
             route_entity_submit="{{route('entity.store')}}"
