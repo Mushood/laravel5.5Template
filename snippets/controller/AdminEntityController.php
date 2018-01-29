@@ -98,7 +98,9 @@ class AdminEntityController extends Controller
      */
     public function edit(Entity $entity)
     {
-      return view('admin.entity.create', compact('entity'));
+        $image = $entity->image;
+
+        return view('admin.entity.create', compact('entity'));
     }
 
     /**

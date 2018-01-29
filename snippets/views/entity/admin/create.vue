@@ -167,6 +167,11 @@
 
           setup: function(){
               this.entity = this.original;
+              let originalFile = this.original.image.name.split("_")[1];
+              let originalName = originalFile.split(".")[0];
+              this.pictures.push({id:this.original.image.id ,name: originalName, value: this.original.image.name});
+              this.picture = this.original.image.name;
+              this.pictureId = this.original.image.id;
               /*
               const vm = this;
               axios.get(vm.route_setup, {
