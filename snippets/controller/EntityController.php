@@ -26,8 +26,9 @@ class EntityController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Entity $entity)
+    public function show($slug)
     {
+        $entity = Entity::where('slug', $slug)->first();
 
         return view('entity.show', compact('entity'));
     }

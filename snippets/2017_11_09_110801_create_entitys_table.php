@@ -19,6 +19,7 @@ class CreateEntitysTable extends Migration
             $table->foreign('image_id')->references('id')->on('images');
             $table->string('title');
             $table->text('body');
+            $table->string('slug');
             $table->integer('order');
             //allows ordering of entity if required
             $table->boolean('active')->default(false);

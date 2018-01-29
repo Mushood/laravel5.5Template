@@ -1,5 +1,8 @@
 <?php
 
+Route::get('/entity', 'EntityController@index')->name('entity.front.index');
+Route::get('/entity/{slug}', 'EntityController@show')->name('entity.front.show');
+
 Route::group(array('prefix' => 'admin','middleware' => ['auth','admin']), function()
 {
     Route::resource('entity', 'AdminEntityController');
