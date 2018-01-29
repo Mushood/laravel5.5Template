@@ -4,7 +4,7 @@
         <img :src="route_image + '/' + entity.image.name" :alt="entity.image.name" class="img-responsive">
     </div>
     <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-        <h3>{{entity.name}}</h3>
+        <h3>{{entity.title}}</h3>
         <span v-html="entity.body.substring(0,600)"></span>
         <div class="row" v-if="is_admin">
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
@@ -93,7 +93,7 @@
                   confirmButtonText: 'Cool'
                 });
 
-                vm.entity.active = true;
+                vm.entity.active = !vm.entity.active;
               }
 
 
@@ -117,7 +117,7 @@
                       confirmButtonText: 'Cool'
                     });
 
-                    vm.entity.active = false;
+                    vm.entity.active = !vm.entity.active;
                 }
 
             })
