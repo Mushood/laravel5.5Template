@@ -150,24 +150,21 @@
                       .then(function (response) {
 
                           if(response.data.code == 200){
-                                Vue.swal(
-                                        'Deleted!',
-                                        'Your entity has been deleted.',
-                                        'success'
-                                    );
-
+                            Vue.swal(
+                                'Deleted!',
+                                'Your entity has been deleted.',
+                                'success'
+                            ).then((result2) => {
+                                if (result2.value) {
+                                        location.reload();
                                 }
-                          location.reload();
+                            });
+                          }
 
                       })
                       .catch(function (error) {
 
                       });
-                      Vue.swal(
-                          'Deleted!',
-                          'Your entity has been deleted.',
-                          'success'
-                      )
                   // result.dismiss can be 'cancel', 'overlay',
                   // 'close', and 'timer'
               } else if (result.dismiss === 'cancel') {
