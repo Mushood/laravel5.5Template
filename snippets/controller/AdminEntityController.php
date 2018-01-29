@@ -118,7 +118,7 @@ class AdminEntityController extends Controller
 
     public function publish(Entity $entity)
     {
-      $entity->isPublished = true;
+      $entity->active = true;
       $entity->save();
 
       return response()->json([
@@ -128,7 +128,7 @@ class AdminEntityController extends Controller
 
     public function unpublish(Entity $entity)
     {
-      $entity->isPublished = false;
+      $entity->active = false;
       $entity->save();
 
       return response()->json([
