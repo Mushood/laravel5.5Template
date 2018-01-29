@@ -156,6 +156,11 @@ class CreateEntity extends Command
                 'directory' => base_path('resources/assets/js/components/' . $this->singularLowerCase ),
                 'destination' => base_path('resources/assets/js/components/' . $this->singularLowerCase . '/list.vue')
             ],
+            'index_js' => [
+                'source' => base_path('snippets/views/entity/front/list.vue') ,
+                'directory' => base_path('resources/assets/js/components/' . $this->singularLowerCase ),
+                'destination' => base_path('resources/assets/js/components/' . $this->singularLowerCase . '/list_front.vue')
+            ],
         ];
     }
 
