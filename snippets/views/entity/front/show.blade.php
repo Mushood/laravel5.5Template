@@ -2,7 +2,8 @@
 
 @section('content')
     <entity
-        route_image="{{url('/images/entity/')}}",
-        route_back="{{route('entity.index')}}"
+        route_image="{{url('/images/entity')}}"
+        route_back="{{route('entity.front.index')}}"
+        :entity="{{$entity}}"
     ></entity>
 @endsection
