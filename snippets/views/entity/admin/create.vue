@@ -69,6 +69,9 @@
               console.log(event);
               vm.onFileUpload(event);
             });
+            if(this.edit>0){
+                this.setup();
+            }
         },
 
         props: {
@@ -86,6 +89,9 @@
                 required: false,
             },
             route_setup: {
+                required: false,
+            },
+            original: {
                 required: false,
             },
         },
@@ -160,6 +166,7 @@
           },
 
           setup: function(){
+              this.entity = this.original;
               /*
               const vm = this;
               axios.get(vm.route_setup, {
