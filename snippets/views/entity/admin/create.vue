@@ -1,13 +1,36 @@
 <template>
     <div class="page_wrapper">
         <div class="row">
-            <div class="col-md-6">
+
+            <div class="col-md-4" v-if="create_width_form == 12">
+                <button class="btn btn-primary btn-block" @click="show_form">Show Form only</button>
+            </div>
+            <div class="col-md-4" v-else>
+                <button class="btn btn-warning btn-block" @click="show_form">Show Form only</button>
+            </div>
+
+            <div class="col-md-4" v-if="create_width_preview == 12">
+                <button class="btn btn-primary btn-block" @click="show_preview">Show Preview only</button>
+            </div>
+            <div class="col-md-4" v-else>
+                <button class="btn btn-warning btn-block" @click="show_preview">Show Preview only</button>
+            </div>
+
+            <div class="col-md-4" v-if="create_width_preview == 6">
+                <button class="btn btn-primary btn-block" @click="show_side">Side by side</button>
+            </div>
+            <div class="col-md-4" v-else>
+                <button class="btn btn-warning btn-block" @click="show_side">Side by side</button>
+            </div>
+        </div>
+        <div class="row">
+            <div :class="'col-md-' + create_width_preview">
                 <h1>Preview Entity</h1>
                 <h3 v-if="entity.title">{{entity.title}}</h3>
                 <p v-if="entity.body" v-html="entity.body"></p>
                 <img :src="route_image + '/' + picture" class="img-responsive col-md-10" alt="image" v-if="picture"/>
             </div>
-            <div class="col-md-6">
+            <div :class="'col-md-' + create_width_form">
                   <h1>Write Entity</h1>
                   <form @submit.prevent="submitForm">
                   <div class="row">
@@ -109,8 +132,9 @@
                 pictures: [],
                 picture: "",
                 pictureId: "",
-                errors: {},
-                entity: {}
+                entity: {},
+                create_width_form: 6,
+                create_width_preview: 6,
           };
         },
 
@@ -162,6 +186,21 @@
                 });
             } ,
 
+            show_form: function(){
+                this.create_width_form = 12;
+                this.create_width_preview = '0 hide';
+            },
+
+            show_preview: function(){
+                this.create_width_form = '0 hide';
+                this.create_width_preview = 12;
+            },
+
+            show_side: function(){
+                this.create_width_form = 6;
+                this.create_width_preview = 6;
+            },
+
             resetForm: function() {
                 this.entity = {};
             } ,
@@ -204,3 +243,9 @@
 
     }
 </script>
+
+<style>
+    .page_wrapper{
+        padding: 10px;
+    }
+</style>
