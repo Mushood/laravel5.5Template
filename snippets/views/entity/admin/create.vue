@@ -13,22 +13,25 @@
                   <div class="row">
                       <div class="form-group">
                           <label for="title">Title</label>
-                          <input type="text" class="form-control" name="title" id="title" v-model="entity.title">
+                          <input type="text" class="form-control" name="title" id="title" v-model="entity.title" v-validate="'required'">
+                          <span v-show="errors.has('title')" class="help is-danger">{{ errors.first('title') }}</span>
                       </div>
                   </div>
                   <div class="row">
                       <div class="form-group">
                           <label for="content">Content</label>
-                          <vue-editor v-model="entity.body"></vue-editor>
+                          <vue-editor v-model="entity.body" v-validate="'required'"></vue-editor>
+                          <span v-show="errors.has('body')" class="help is-danger">{{ errors.first('body') }}</span>
                       </div>
                   </div>
                   <div class="row">
                       <div class="form-group">
                           <label for="image">Image</label>
-                          <select  name='image' v-model="picture">
+                          <select  name='image' v-model="picture" v-validate="'required'">
                               <option value="upload">Upload a new picture</option>
                               <option v-for="picture in pictures" :value="picture.value">{{picture.name}}</option>
                           </select>
+                          <span v-show="errors.has('image')" class="help is-danger">{{ errors.first('image') }}</span>
                       </div>
                       <div class="row" v-if="picture == 'upload'">
                           <multiplefileuploader
