@@ -19,7 +19,7 @@ class CreateEntity extends Command
      *
      * @var string
      */
-    protected $signature = 'create:entity {name}';
+    protected $signature = 'create:entity {name} {--policy}';
 
     /**
      * The console command description.
@@ -46,6 +46,7 @@ class CreateEntity extends Command
     public function handle()
     {
         $name = $this->argument('name');
+        $shouldCreatePolicy = $this->option('policy');
         $this->initialiseNameVariables($name);
         $this->initialiseFileNames();
 
@@ -72,6 +73,10 @@ class CreateEntity extends Command
             if($boilerplateCreated){
                 $this->info("Boilerplate created!");
             }
+        }
+
+        if($shouldCreatePolicy){
+            $this->createPolicyBoilerPlate();
         }
 
         $this->info("Boilerplate created for {$this->singularLowerCase}!");
@@ -243,5 +248,35 @@ class CreateEntity extends Command
         if(!\File::isDirectory($publicFolder)){
             File::makeDirectory($publicFolder);
         }
+    }
+
+    private function createPolicyBoilerPlate()
+    {
+        $sourceFile = base_path('snippets/EntityPolicy.php') ;
+        $directoryFile = base_path('app/Policies');
+        $destinationFile = base_path('app/Policies/' . $this->singularFirstUpper . 'Policy.php');
+
+        if(!\File::isDirectory($directoryFile)){
+            File::makeDirectory($directoryFile);
+        }
+
+        \File::copy($sourceFile,$destinationFile);
+        try
+        {
+            $contents = File::get($destinationFile);
+            $contents = str_replace('entitys',$this->pluralLowerCase,$contents);
+            $contents = str_replace('Entitys',$this->pluralFirstUpper,$contents);
+            $contents = str_replace('entity',$this->singularLowerCase,$contents);
+            $contents = str_replace('Entity',$this->singularFirstUpper,$contents);
+            \File::put($destinationFile, $contents);
+
+            $this->info("Policy Boilerplate created!");
+        }
+        catch (Illuminate\Filesystem\FileNotFoundException $exception)
+        {
+            $this->info("Boilerplate could not be created!");
+        }
+
+        return true;
     }
 }
