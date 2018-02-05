@@ -1,26 +1,19 @@
 <template>
     <div class="page_wrapper">
         <div class="row">
-
-            <div class="col-md-4" v-if="create_width_form == 12">
-                <button class="btn btn-primary btn-block" @click="show_form">Show Form only</button>
-            </div>
-            <div class="col-md-4" v-else>
-                <button class="btn btn-warning btn-block" @click="show_form">Show Form only</button>
-            </div>
-
-            <div class="col-md-4" v-if="create_width_preview == 12">
-                <button class="btn btn-primary btn-block" @click="show_preview">Show Preview only</button>
-            </div>
-            <div class="col-md-4" v-else>
-                <button class="btn btn-warning btn-block" @click="show_preview">Show Preview only</button>
-            </div>
-
-            <div class="col-md-4" v-if="create_width_preview == 6">
-                <button class="btn btn-primary btn-block" @click="show_side">Side by side</button>
-            </div>
-            <div class="col-md-4" v-else>
-                <button class="btn btn-warning btn-block" @click="show_side">Side by side</button>
+            <div class="btn-group btn-group-justified" role="group">
+                <div class="btn-group" role="group">
+                    <button class="btn btn-primary" @click="show_form" v-if="create_width_form == 12">Show Form only</button>
+                    <button class="btn btn-warning" @click="show_form" v-else>Show Form only</button>
+                </div>
+                <div class="btn-group" role="group">
+                    <button class="btn btn-primary" @click="show_preview" v-if="create_width_preview == 12">Show Preview only</button>
+                    <button class="btn btn-warning" @click="show_preview" v-else>Show Preview only</button>
+                </div>
+                <div class="btn-group" role="group">
+                    <button class="btn btn-primary" @click="show_side" v-if="create_width_preview == 6">Side by side</button>
+                    <button class="btn btn-warning" @click="show_side" v-else>Side by side</button>
+                </div>
             </div>
         </div>
         <div class="row">
