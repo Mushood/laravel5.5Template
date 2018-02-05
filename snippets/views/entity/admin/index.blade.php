@@ -38,7 +38,7 @@
                     route_publish="{{route('entity.publish', ['entity' => $entity->id])}}"
                     route_unpublish="{{route('entity.unpublish', ['entity' => $entity->id])}}"
                     route_delete="{{route('entity.destroy', ['entity' => $entity->id])}}"
-                    route_image="{{url('/images/entitys')}}"
+                    route_image="{{url(\App\Models\Entity::routeImages)}}"
                 >
                 </tr>
             @endforeach

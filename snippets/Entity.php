@@ -11,6 +11,8 @@ class Entity extends Model
     use SoftDeletes;
     use Sluggable;
 
+    CONST routeImages = '/images/entitys';
+
     protected $dates = ['deleted_at'];
 
     protected $fillable = ['title','body','order','active'];
