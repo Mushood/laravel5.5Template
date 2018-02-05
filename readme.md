@@ -37,6 +37,7 @@ When working on a project, I often have the same code repeated for my entities. 
 - Entity Blade: index, create, show
 - Entity VueJS: list, create, show
 - Entity routes
+- Folder for images of the entity
 
 In order to generate the list of above snippets, you need to run the following command: "php artisan create:entity entitySingular/entityPlural". You can also just include the singular version and for the plural an 's' would be appended.
 
@@ -48,6 +49,7 @@ Example: php artisan create:entity testimonial/testimonials
 - Testimonial Blade: index, create, show
 - Testimonial VueJS: list, create, show
 - Testimonial routes
+- testimonials folder for images in public/images/testimonials
 
 You can then configure your pages, migrations and controller actions. If by chance, the boilerplate works for you. You can just run "php artisan migrate" to create your entity table. You then need to include your routes file in your web.php and require your components in your app.js. And you are done.
 

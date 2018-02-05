@@ -1,8 +1,8 @@
 {
+    "/js/admin.js": "/js/admin.js",
     "/js/app.js": "/js/app.js",
     "/css/app.css": "/css/app.css",
     "/css/admin.css": "/css/admin.css",
-    "/js/admin.js": "/js/admin.js",
     "/css/bootstrap.min.css": "/css/bootstrap.min.css",
     "/css/AdminLTE.min.css": "/css/AdminLTE.min.css",
     "/css/skin-purple.min.css": "/css/skin-purple.min.css",
