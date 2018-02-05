@@ -65,6 +65,8 @@ class CreateEntity extends Command
             return false;
         }
 
+        $this->checkPublicFileForImages();
+
         foreach ($this->files as $file){
             $boilerplateCreated = $this->createBoilerplate($file);
             if($boilerplateCreated){
@@ -232,5 +234,14 @@ class CreateEntity extends Command
         }
 
         return true;
+    }
+
+    private function checkPublicFileForImages()
+    {
+        $publicFolder = public_path('images/' . $this->pluralLowerCase);
+
+        if(!\File::isDirectory($publicFolder)){
+            File::makeDirectory($publicFolder);
+        }
     }
 }
