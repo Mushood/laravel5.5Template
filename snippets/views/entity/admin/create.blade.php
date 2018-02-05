@@ -2,11 +2,19 @@
 
 @section('header')
     <section class="content-header">
-      @if($entity == null)
-        <h1>Write a entity</h1>
-      @else
-        <h1>Update a entity</h1>
-      @endif
+        <div class="row">
+            <div class="col-md-8">
+                @if($entity == null)
+                    <h1>Write a entity</h1>
+                @else
+                    <h1>Update a entity</h1>
+                @endif
+            </div>
+            <div class="col-md-4">
+                <a class="btn btn-warning btn-block" href="{{route('entity.index')}}"> Back</a>
+            </div>
+        </div>
+
     </section>
 @endsection
 
