@@ -179,3 +179,9 @@
         },
     }
 </script>
+
+<style>
+    .fc-button{
+        cursor: pointer;
+    }
+</style>
