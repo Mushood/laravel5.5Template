@@ -18,22 +18,32 @@
 
 
 @section ('content')
-<div class="container">
-    @foreach($entitys as $entity)
-        <div class="row">
-            <entitylist :entity="{{$entity}}"
-                        is_admin="{{(Auth::user() != null) && Auth::user()->hasRole('admin')}}"
-                        route_show="{{route('entity.show', ['entity' => $entity->id])}}"
-                        route_edit="{{route('entity.edit', ['entity' => $entity->id])}}"
-                        route_publish="{{route('entity.publish', ['entity' => $entity->id])}}"
-                        route_unpublish="{{route('entity.unpublish', ['entity' => $entity->id])}}"
-                        route_delete="{{route('entity.destroy', ['entity' => $entity->id])}}"
-                        route_image="{{url('/images/entitys')}}"
-            >
-            </entitylist>
-        </div>
-        <hr />
-    @endforeach
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Title</th>
+                <th scope="col">Description</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($entitys as $key => $entity)
+                <tr is="entitylist"
+                    index="{{$key+1}}"
+                    :entity="{{$entity}}"
+                    is_admin="{{(Auth::user() != null) && Auth::user()->hasRole('admin')}}"
+                    route_show="{{route('entity.show', ['entity' => $entity->id])}}"
+                    route_edit="{{route('entity.edit', ['entity' => $entity->id])}}"
+                    route_publish="{{route('entity.publish', ['entity' => $entity->id])}}"
+                    route_unpublish="{{route('entity.unpublish', ['entity' => $entity->id])}}"
+                    route_delete="{{route('entity.destroy', ['entity' => $entity->id])}}"
+                    route_image="{{url('/images/entitys')}}"
+                >
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
     {{$entitys->links()}}
 </div>
 @endsection

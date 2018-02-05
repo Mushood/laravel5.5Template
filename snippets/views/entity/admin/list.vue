@@ -1,36 +1,27 @@
 <template>
-  <div class="entityblock">
-    <div class="col-lg-4 col-md-2 col-sm-2 col-xs-12">
-        <img :src="route_image + '/' + entity.image.name" :alt="entity.image.name" class="img-responsive">
-    </div>
-    <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-        <h3>{{entity.title}}</h3>
-        <span v-html="entity.body.substring(0,600)"></span>
-        <div class="row" v-if="is_admin">
-            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                <a :href="route_edit">
-                    <button class="btn btn-warning btn-block">Edit</button>
-                </a>
+    <tr class="testimonial_row">
+        <td>{{index}}</td>
+        <td>
+            {{entity.title}}
+        </td>
+        <td v-html="entity.body.substring(0,100)"></td>
+        <td>
+            <div class="row">
+                <div class="col-md-3 text-center">
+                    <a class="fc-button" :href="route_edit"><i class="fa fa-edit"></i> <br/>Edit</a>
+                </div>
+                <div class="col-md-3 text-center">
+                    <a class="fc-button" @click.prevent="delete_entity"><i class="fa fa-trash"></i> <br/>Delete</a>
+                </div>
+                <div class="col-md-5 text-center" v-if="active">
+                    <a class="fc-button" @click.prevent="unpublish"><i class="fa fa-eye-slash"></i> <br/>Unpublish</a>
+                </div>
+                <div class="col-md-5 text-center" v-else>
+                    <a class="fc-button" @click.prevent="publish"><i class="fa fa-bullhorn"></i> <br/>Publish</a>
+                </div>
             </div>
-            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                <button class="btn btn-danger btn-block" @click.prevent="delete_entity">Delete</button>
-            </div>
-            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12" v-if="active">
-                <button class="btn btn-primary btn-block" @click.prevent="unpublish">Unpublish</button>
-            </div>
-            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12" v-else>
-                <button class="btn btn-success btn-block" @click.prevent="publish">Publish</button>
-            </div>
-        </div>
-        <div class="row" v-else>
-            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                <a :href="route_show">
-                    <button class="btn btn-warning btn-block">show</button>
-                </a>
-            </div>
-        </div>
-      </div>
-  </div>
+        </td>
+    </tr>
 </template>
 
 <script>
@@ -41,6 +32,10 @@
         },
 
         props: {
+            index: {
+                required: false,
+                default: 0
+            },
             edit: {
                 required: false,
                 default: 0
@@ -74,7 +69,6 @@
 
         data() {
             return {
-                errors: {},
                 active: false,
             };
         },
