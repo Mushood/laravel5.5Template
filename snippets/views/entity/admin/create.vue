@@ -36,7 +36,7 @@
                   <div class="row">
                       <div class="form-group">
                           <label for="content">Content</label>
-                          <vue-editor v-model="entity.body" v-validate="'required'"></vue-editor>
+                          <vue-editor v-model="entity.body" name="body" v-validate="'required'"></vue-editor>
                           <span v-show="errors.has('body')" class="help is-danger">{{ errors.first('body') }}</span>
                       </div>
                   </div>
