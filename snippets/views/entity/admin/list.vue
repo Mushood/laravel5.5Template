@@ -1,10 +1,9 @@
 <template>
     <tr class="testimonial_row">
         <td>{{index}}</td>
-        <td>
-            {{entity.title}}
-        </td>
+        <td>{{entity.title}}</td>
         <td v-html="entity.body.substring(0,100)"></td>
+        <td>{{new Date(entity.created_at)  | moment("dddd, DD/MM/YYYY")}}</td>
         <td>
             <div class="row">
                 <div class="col-md-3 text-center">
