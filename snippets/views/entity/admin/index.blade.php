@@ -2,17 +2,19 @@
 
 @section('header')
     <section class="content-header">
-      <div class="row">
-        <div class="col-md-8">
-          <h1>
-            Our Entity
-          </h1>
+        <div class="row">
+            <div class="col-md-8">
+                <h1>
+                    Our Entity
+                </h1>
+            </div>
+            <div class="col-md-4">
+                <a href="{{route('entity.create')}}" class="btn btn-primary btn-block">New Entity</a>
+            </div>
         </div>
-        <div class="col-md-4">
-          <a href="{{route('entity.create')}}" class="btn btn-primary btn-block">New Entity</a>
-        </div>
-      </div>
-
+        <searchbar
+            search_route="{{route('entity.search')}}"
+        ></searchbar>
     </section>
 @endsection
 

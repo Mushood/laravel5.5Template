@@ -137,4 +137,16 @@ class AdminEntityController extends Controller
           'code' => 200
       ]);
     }
+
+    public function search(Request $request)
+    {
+        $query = $request->query;
+
+        $results = Entity::where('title', 'like', '%' . $query . '%')->where('active',true)->get();
+
+        return response()->json([
+            'code' => 200,
+            'results' => $results,
+        ]);
+    }
 }

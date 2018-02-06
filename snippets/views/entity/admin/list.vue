@@ -28,6 +28,10 @@
         mounted() {
             console.log('Component list entity mounted.');
             this.active = this.entity.active;
+
+            Event.$on('search_done', function(event){
+                this.reload_results(event);
+            });
         },
 
         props: {
@@ -75,52 +79,52 @@
         methods : {
 
           publish: function(e) {
-            const vm = this;
-            axios.get(vm.route_publish , {
+              const vm = this;
+              axios.get(vm.route_publish , {
 
-            })
-            .then(function (response) {
-              if(response.data.code == 200){
-                Vue.swal({
-                  title: 'Success!',
-                  text: 'The entity has been published',
-                  type: 'success',
-                  confirmButtonText: 'Cool'
-                });
+              })
+              .then(function (response) {
+                  if(response.data.code == 200){
+                      Vue.swal({
+                        title: 'Success!',
+                        text: 'The entity has been published',
+                        type: 'success',
+                        confirmButtonText: 'Cool'
+                      });
 
-                vm.entity.active = !vm.entity.active;
-                vm.active = vm.entity.active;
-              }
+                      vm.entity.active = !vm.entity.active;
+                      vm.active = vm.entity.active;
+                  }
 
 
-            })
-            .catch(function (error) {
+              })
+              .catch(function (error) {
 
-            });
+              });
           },
 
           unpublish: function(e) {
-            const vm = this;
-            axios.get(vm.route_unpublish , {
+              const vm = this;
+              axios.get(vm.route_unpublish , {
 
-            })
-            .then(function (response) {
-                if(response.data.code == 200){
-                    Vue.swal({
-                      title: 'Warning!',
-                      text: 'The entity has been unpublished. It can no longer be viewed by your users!',
-                      type: 'warning',
-                      confirmButtonText: 'Cool'
-                    });
+              })
+              .then(function (response) {
+                  if(response.data.code == 200){
+                        Vue.swal({
+                          title: 'Warning!',
+                          text: 'The entity has been unpublished. It can no longer be viewed by your users!',
+                          type: 'warning',
+                          confirmButtonText: 'Cool'
+                        });
 
-                    vm.entity.active = !vm.entity.active;
-                    vm.active = vm.entity.active;
-                }
+                        vm.entity.active = !vm.entity.active;
+                        vm.active = vm.entity.active;
+                  }
 
-            })
-            .catch(function (error) {
+              })
+              .catch(function (error) {
 
-            });
+              });
           },
 
           delete_entity: function(e) {
@@ -164,16 +168,21 @@
                       });
                   // result.dismiss can be 'cancel', 'overlay',
                   // 'close', and 'timer'
-              } else if (result.dismiss === 'cancel') {
-                  Vue.swal(
-                      'Cancelled',
-                      'Your entity is safe :)',
-                      'error'
-                  )
-              }
-          })
+                  } else if (result.dismiss === 'cancel') {
+                      Vue.swal(
+                          'Cancelled',
+                          'Your entity is safe :)',
+                          'error'
+                      )
+                  }
+              })
 
-          }
+          },
+
+          reload_results: function(event) {
+              let results = event.results;
+
+          },
 
         },
     }
