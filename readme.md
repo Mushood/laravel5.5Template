@@ -13,6 +13,7 @@ This is a custom template that I use to kickstart a new project. Included are de
 - Text Editor: https://github.com/davidroyer/vue2-editor
 - Slider: https://github.com/staskjs/vue-slick
 - Vee-validate: https://github.com/baianat/vee-validate
+- Moment: https://www.npmjs.com/package/vue-moment
 
 *** Admin designs ***
 - Laravel Backpack: https://github.com/Laravel-Backpack/Base :: included skins as well, to change as required.
