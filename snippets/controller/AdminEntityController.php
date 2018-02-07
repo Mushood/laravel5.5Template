@@ -17,9 +17,11 @@ class AdminEntityController extends Controller
      */
     public function index()
     {
-      $entitys = Entity::latest()->with('image')->paginate(12);
+        $entitys = Entity::latest()->with('image')->paginate(12);
 
-      return view('admin.entity.index', compact('entitys'));
+        $entitys = $this->addRoutesToEntities($entitys);
+
+        return view('admin.entity.index', compact('entitys'));
     }
 
     /**
@@ -29,9 +31,9 @@ class AdminEntityController extends Controller
      */
     public function create()
     {
-      $entity = null;
+        $entity = null;
 
-      return view('admin.entity.create', compact('entity'));
+        return view('admin.entity.create', compact('entity'));
     }
 
     /**
@@ -120,22 +122,22 @@ class AdminEntityController extends Controller
 
     public function publish(Entity $entity)
     {
-      $entity->active = true;
-      $entity->save();
+        $entity->active = true;
+        $entity->save();
 
-      return response()->json([
-          'code' => 200,
-      ]);
+        return response()->json([
+            'code' => 200,
+        ]);
     }
 
     public function unpublish(Entity $entity)
     {
-      $entity->active = false;
-      $entity->save();
+        $entity->active = false;
+        $entity->save();
 
-      return response()->json([
-          'code' => 200
-      ]);
+        return response()->json([
+            'code' => 200
+        ]);
     }
 
     public function search(Request $request)
@@ -148,5 +150,20 @@ class AdminEntityController extends Controller
             'code' => 200,
             'results' => $results,
         ]);
+    }
+
+    private function addRoutesToEntities($entitys)
+    {
+        foreach($entitys as $entity){
+            $entity->route = [
+                'show' => route('entity.show', ['entity' => $entity->id]),
+                'edit' => route('entity.edit', ['entity' => $entity->id]),
+                'publish' => route('entity.publish', ['entity' => $entity->id]),
+                'unpublish' => route('entity.unpublish', ['entity' => $entity->id]),
+                'delete' => route('entity.destroy', ['entity' => $entity->id])
+            ];
+        }
+
+        return $entitys;
     }
 }
