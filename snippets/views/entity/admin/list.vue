@@ -11,7 +11,7 @@
         </thead>
         <tbody>
             <tr class="testimonial_row" v-for="(entity,index) in entitys">
-                <td>{{index+1}}</td>
+                <td><input :id="entity.id" type="checkbox" @change="update_selection"></td>
                 <td>{{entity.title}}</td>
                 <td v-html="entity.body.substring(0,100)"></td>
                 <td>{{new Date(entity.created_at)  | moment("dddd, DD/MM/YYYY")}}</td>
@@ -64,6 +64,7 @@
             return {
                 active: false,
                 entitys:{},
+                selections:[],
             };
         },
 
@@ -170,6 +171,17 @@
 
             reload_results: function(event) {
                 this.entitys = event.results;
+            },
+
+            update_selection(e){
+                let target = e.target.id;
+                let index = vm.selections.indexOf(target);
+
+                if(index > 0){
+                    this.selections.splice(index, 1);
+                } else {
+                    this.selections.push(target);
+                }
             },
 
         },
