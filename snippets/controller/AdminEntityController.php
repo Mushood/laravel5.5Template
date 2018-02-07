@@ -142,9 +142,16 @@ class AdminEntityController extends Controller
 
     public function search(Request $request)
     {
-        $query = $request->query;
+        $query = $request['query'];
 
-        $results = Entity::where('title', 'like', '%' . $query . '%')->where('active',true)->get();
+        if($query != ""){
+            $results = Entity::where('title', 'like', '%' . $query . '%')->paginate(12);
+        } else {
+            $results = Entity::latest()->with('image')->paginate(12);
+        }
+
+        $results = collect($results->items());
+        $results = $this->addRoutesToEntities($results);
 
         return response()->json([
             'code' => 200,

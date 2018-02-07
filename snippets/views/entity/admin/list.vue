@@ -41,8 +41,9 @@
         mounted() {
             console.log('Component list entity mounted.');
             this.entitys = this.originals;
+            const vm = this;
             Event.$on('search_done', function(event){
-                this.reload_results(event);
+                vm.reload_results(event);
             });
         },
 

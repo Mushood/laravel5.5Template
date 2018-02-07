@@ -37,7 +37,7 @@ Vue.use(VeeValidate, config_validation);
 window.Event = new Vue();
 
 Vue.component('multiplefileuploader', require('./components/fileuploader.vue'));
-
+Vue.component('searchbar', require('./components/searchbar.vue'));
 
 const app = new Vue({
     el: '#admin',

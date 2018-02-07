@@ -35,7 +35,7 @@ export default {
             })
             .then(function (response) {
                 if(response.data.code == 200){
-                    Event.$emit('fileUploaded',{
+                    Event.$emit('search_done',{
                         results: response.data.results,
                     });
                 }
