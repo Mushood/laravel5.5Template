@@ -92,63 +92,63 @@
                 });
             },
 
-          unpublish: function(route, event) {
-              const vm = this;
-              let index = event.target.id;
-              axios.get(route , {
+            unpublish: function(route, event) {
+                const vm = this;
+                let index = event.target.id;
+                axios.get(route , {
 
-              })
-              .then(function (response) {
-                  if(response.data.code == 200){
-                      Vue.swal({
-                          title: 'Warning!',
-                          text: 'The entity has been unpublished. It can no longer be viewed by your users!',
-                          type: 'warning',
-                          confirmButtonText: 'Cool'
-                      });
-                      vm.entitys[index].active = !vm.entitys[index].active;
-                  }
+                })
+                .then(function (response) {
+                    if(response.data.code == 200){
+                        Vue.swal({
+                            title: 'Warning!',
+                            text: 'The entity has been unpublished. It can no longer be viewed by your users!',
+                            type: 'warning',
+                            confirmButtonText: 'Cool'
+                        });
+                        vm.entitys[index].active = !vm.entitys[index].active;
+                    }
 
-              })
-              .catch(function (error) {
+                })
+                .catch(function (error) {
 
-              });
-          },
+                });
+            },
 
-          delete_entity: function(route) {
-              const vm = this;
+            delete_entity: function(route) {
+                const vm = this;
 
-              Vue.swal({
-                  title: 'Are you sure?',
-                  text: "You won't be able to revert this!",
-                  type: 'warning',
-                  showCancelButton: true,
-                  confirmButtonColor: '#3085d6',
-                  cancelButtonColor: '#d33',
-                  confirmButtonText: 'Yes, delete it!',
-                  cancelButtonText: 'No, cancel!',
-                  confirmButtonClass: 'btn btn-success',
-                  cancelButtonClass: 'btn btn-danger',
-                  buttonsStyling: false,
-                  reverseButtons: true
-              }).then((result) => {
-                  if (result.value) {
-                      axios.delete(route , {
+                Vue.swal({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!',
+                    cancelButtonText: 'No, cancel!',
+                    confirmButtonClass: 'btn btn-success',
+                    cancelButtonClass: 'btn btn-danger',
+                    buttonsStyling: false,
+                    reverseButtons: true
+                }).then((result) => {
+                    if (result.value) {
+                        axios.delete(route , {
 
-                      })
-                      .then(function (response) {
+                        })
+                        .then(function (response) {
 
-                          if(response.data.code == 200){
-                            Vue.swal(
-                                'Deleted!',
-                                'Your entity has been deleted.',
-                                'success'
-                            ).then((result2) => {
-                                if (result2.value) {
+                            if(response.data.code == 200){
+                                Vue.swal(
+                                    'Deleted!',
+                                    'Your entity has been deleted.',
+                                    'success'
+                                ).then((result2) => {
+                                    if (result2.value) {
                                         location.reload();
-                                }
-                            });
-                          }
+                                    }
+                                });
+                            }
 
                       })
                       .catch(function (error) {
@@ -156,21 +156,20 @@
                       });
                   // result.dismiss can be 'cancel', 'overlay',
                   // 'close', and 'timer'
-                  } else if (result.dismiss === 'cancel') {
-                      Vue.swal(
-                          'Cancelled',
-                          'Your entity is safe :)',
-                          'error'
-                      )
-                  }
-              })
+                    } else if (result.dismiss === 'cancel') {
+                        Vue.swal(
+                            'Cancelled',
+                            'Your entity is safe :)',
+                            'error'
+                        )
+                    }
+                })
 
-          },
+            },
 
-          reload_results: function(event) {
-              let results = event.results;
-
-          },
+            reload_results: function(event) {
+                this.entitys = event.results;
+            },
 
         },
     }

@@ -12,6 +12,12 @@
                 <a href="{{route('entity.create')}}" class="btn btn-primary btn-block">New Entity</a>
             </div>
         </div>
+        <div class="row">
+            <searchbar
+                route_search="{{route('entity.search')}}"
+            >
+            </searchbar>
+        </div>
     </section>
 @endsection
 
