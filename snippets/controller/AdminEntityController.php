@@ -174,7 +174,7 @@ class AdminEntityController extends Controller
                 }
                 break;
 
-            CASE 'unpublish':
+            CASE 'publish':
                 foreach ($entitys as $entity){
                     $entity->active = true;
                     $entity->save();
@@ -185,13 +185,13 @@ class AdminEntityController extends Controller
                 foreach ($entitys as $entity){
                     $entity->delete();
                 }
-                $entitys = Entity::latest()->with('image')->paginate(12);
                 break;
 
             default:
                 break;
         }
 
+        $entitys = Entity::latest()->with('image')->paginate(12)->items();
         $entitys = $this->addRoutesToEntities($entitys);
 
         return response()->json([
