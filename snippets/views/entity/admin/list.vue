@@ -1,15 +1,27 @@
 <template>
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">Title</th>
-            <th scope="col">Description</th>
-            <th scope="col">Date</th>
-            <th scope="col">Actions</th>
-        </tr>
-        </thead>
-        <tbody>
+    <div>
+        <div class="row" v-if="selections.length > 0">
+            <div class="col-md-4 text-center">
+                <a class="btn btn-primary btn-block" @click.prevent="delete_entitys"><i class="fa fa-trash"></i> <br/>Delete Selected</a>
+            </div>
+            <div class="col-md-4 text-center">
+                <a class="btn btn-primary btn-block" @click.prevent="unpublish_entitys"><i class="fa fa-eye-slash"></i> <br/>Unpublish Selected</a>
+            </div>
+            <div class="col-md- text-center">
+                <a class="btn btn-primary btn-block" @click.prevent="publish_entitys"><i class="fa fa-bullhorn"></i> <br/>Publish Selected</a>
+            </div>
+        </div>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Title</th>
+                <th scope="col">Description</th>
+                <th scope="col">Date</th>
+                <th scope="col">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
             <tr class="testimonial_row" v-for="(entity,index) in entitys">
                 <td><input :id="entity.id" type="checkbox" @change="update_selection"></td>
                 <td>{{entity.title}}</td>
@@ -32,8 +44,9 @@
                     </div>
                 </td>
             </tr>
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </div>
 </template>
 
 <script>
@@ -183,6 +196,42 @@
                     this.selections.push(target);
                 }
             },
+
+            delete_entitys(){
+                this.bulk_action('delete');
+            },
+
+            unpublish_entitys(){
+                this.bulk_action('unpublish');
+            },
+
+            publish_entitys(){
+                this.bulk_action('publish');
+            },
+
+            bulk_action(task){
+                axios.post(route , {
+                    action: task,
+                    selection: this.selections,
+                })
+                .then(function (response) {
+                    if(response.data.code == 200){
+                        Vue.swal({
+                            title: 'Success!',
+                            text: 'Action Complete',
+                            type: 'success',
+                            confirmButtonText: 'Cool'
+                        });
+                        vm.entitys = response.data.updated_results;
+                    }
+
+
+                })
+                .catch(function (error) {
+
+                });
+            },
+
 
         },
     }

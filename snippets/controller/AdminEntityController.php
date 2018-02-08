@@ -159,6 +159,47 @@ class AdminEntityController extends Controller
         ]);
     }
 
+    public function bulkAction(Request $request)
+    {
+        $action = $request['action'];
+        $selections = $request['selections'];
+
+        $entitys = Entity::whereIn('id', $selections)->get();
+
+        switch($action){
+            CASE 'unpublish':
+                foreach ($entitys as $entity){
+                    $entity->active = false;
+                    $entity->save();
+                }
+                break;
+
+            CASE 'unpublish':
+                foreach ($entitys as $entity){
+                    $entity->active = true;
+                    $entity->save();
+                }
+                break;
+
+            CASE 'delete':
+                foreach ($entitys as $entity){
+                    $entity->delete();
+                }
+                $entitys = Entity::latest()->with('image')->paginate(12);
+                break;
+
+            default:
+                break;
+        }
+
+        $entitys = $this->addRoutesToEntities($entitys);
+
+        return response()->json([
+            'code' => 200,
+            'updated_results' => $entitys,
+        ]);
+    }
+
     private function addRoutesToEntities($entitys)
     {
         foreach($entitys as $entity){
