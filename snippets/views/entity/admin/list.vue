@@ -14,7 +14,7 @@
         <table class="table table-striped">
             <thead>
             <tr>
-                <th scope="col">#</th>
+                <th scope="col"><input type="checkbox" v-model="all_selected" @click="selectAll"></th>
                 <th scope="col">Title</th>
                 <th scope="col">Description</th>
                 <th scope="col">Date</th>
@@ -78,7 +78,7 @@
 
         data() {
             return {
-                active: false,
+                all_selected: false,
                 entitys:{},
                 selections:[],
             };
@@ -228,6 +228,7 @@
                         });
                         vm.entitys = response.data.updated_results;
                         vm.selections = [];
+                        vm.all_selected = false;
                     }
 
 
@@ -235,6 +236,16 @@
                 .catch(function (error) {
 
                 });
+            },
+
+            selectAll: function() {
+                this.selections = [];
+
+                if (!this.all_selected) {
+                    for (var i=0;i<this.entitys.length;i++) {
+                        this.selections.push(this.entitys[i].id);
+                    }
+                }
             },
 
 
