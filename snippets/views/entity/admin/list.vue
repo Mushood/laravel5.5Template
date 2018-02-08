@@ -23,7 +23,7 @@
             </thead>
             <tbody>
             <tr class="testimonial_row" v-for="(entity,index) in entitys">
-                <td><input :id="entity.id" type="checkbox" @change="update_selection"></td>
+                <td><input type="checkbox" v-model="selections" @change="update_selection" :value="entity.id"></td>
                 <td>{{entity.title}}</td>
                 <td v-html="entity.body.substring(0,100)"></td>
                 <td>{{new Date(entity.created_at)  | moment("dddd, DD/MM/YYYY")}}</td>
@@ -227,6 +227,7 @@
                             confirmButtonText: 'Cool'
                         });
                         vm.entitys = response.data.updated_results;
+                        vm.selections = [];
                     }
 
 
