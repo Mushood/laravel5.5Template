@@ -7,6 +7,7 @@ This is a custom template that I use to kickstart a new project. Included are de
 - Sluggable: https://github.com/cviebrock/eloquent-sluggable
 - Role & Permissions: https://github.com/spatie/laravel-permission
 - Image: http://image.intervention.io/
+- Excel: https://github.com/Maatwebsite/Laravel-Excel
 
 *** NPM packages ***
 - SweetAlert: https://www.npmjs.com/package/vue-sweetalert2
