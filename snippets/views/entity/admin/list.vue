@@ -68,6 +68,9 @@
             route_image: {
                 required: true,
             },
+            route_bulk_action: {
+                required: true,
+            },
             originals: {
                 required: true,
             },
@@ -188,7 +191,7 @@
 
             update_selection(e){
                 let target = e.target.id;
-                let index = vm.selections.indexOf(target);
+                let index = this.selections.indexOf(target);
 
                 if(index > 0){
                     this.selections.splice(index, 1);
@@ -210,9 +213,10 @@
             },
 
             bulk_action(task){
-                axios.post(route , {
+                const vm = this;
+                axios.post(vm.route_bulk_action , {
                     action: task,
-                    selection: this.selections,
+                    selections: this.selections,
                 })
                 .then(function (response) {
                     if(response.data.code == 200){

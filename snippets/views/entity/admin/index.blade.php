@@ -26,6 +26,7 @@
     <entitylist
         :originals="{{collect($entitys->items())}}"
         route_image="{{url(\App\Models\Entity::routeImages)}}"
+        route_bulk_action="{{route('entity.bulk.action')}}"
     >
     </entitylist>
 
