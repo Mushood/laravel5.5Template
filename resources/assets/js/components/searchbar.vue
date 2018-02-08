@@ -1,7 +1,7 @@
 <template>
     <div class="search_box">
         <div class="form-group">
-            <input type="text" class="form-control" v-model="query" placeholder="Search" @change="search">
+            <input type="text" class="form-control" v-model="query" placeholder="Press on 'enter' to start the search" @keyup.enter="search">
         </div>
     </div>
 </template>
