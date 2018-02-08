@@ -16,9 +16,21 @@ class AdminEntityController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $entitys = Entity::latest()->with('image')->paginate(12);
+        if(isset($request->order)){
+            $order = $request->order;
+        } else {
+            $order = 'created_at';
+        }
+
+        if(isset($request->order)){
+            $direction = $request->direction;
+        } else {
+            $direction = 'DESC';
+        }
+
+        $entitys = Entity::orderBy($order, $direction)->with('image')->paginate(12);
 
         $entitys = $this->addRoutesToEntities($entitys);
 

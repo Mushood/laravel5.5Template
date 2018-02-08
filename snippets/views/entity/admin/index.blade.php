@@ -30,6 +30,7 @@
         :originals="{{collect($entitys->items())}}"
         route_image="{{url(\App\Models\Entity::routeImages)}}"
         route_bulk_action="{{route('entity.bulk.action')}}"
+        route_order_title ="{{route('entity.index',['order' => 'title', 'direction' => 'ASC'])}}"
     >
     </entitylist>
 

@@ -15,7 +15,11 @@
             <thead>
             <tr>
                 <th scope="col"><input type="checkbox" v-model="all_selected" @click="selectAll"></th>
-                <th scope="col">Title</th>
+                <th scope="col">
+                    <a :href="route_order_title">
+                        Title
+                    </a>
+                </th>
                 <th scope="col">Description</th>
                 <th scope="col">Date</th>
                 <th scope="col">Actions</th>
@@ -72,6 +76,9 @@
                 required: true,
             },
             originals: {
+                required: true,
+            },
+            route_order_title: {
                 required: true,
             },
         },
