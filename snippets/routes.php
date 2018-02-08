@@ -6,6 +6,7 @@ Route::get('/entity/{slug}', 'EntityController@show')->name('entity.front.show')
 Route::group(array('prefix' => 'admin','middleware' => ['auth','admin']), function()
 {
     Route::resource('entity', 'AdminEntityController');
+    Route::get('/entity/export/list', 'AdminEntityController@export')->name('entity.export');
     Route::post('/entity/search/list', 'AdminEntityController@search')->name('entity.search');
     Route::post('/entity/bulk/action', 'AdminEntityController@bulkAction')->name('entity.bulk.action');
     Route::post('/entity/image/create', 'AdminEntityController@uploadImage')->name('entity.image.upload');

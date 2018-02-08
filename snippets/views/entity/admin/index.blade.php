@@ -3,13 +3,16 @@
 @section('header')
     <section class="content-header">
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-6">
                 <h1>
                     Our Entity
                 </h1>
             </div>
-            <div class="col-md-4">
-                <a href="{{route('entity.create')}}" class="btn btn-primary btn-block">New Entity</a>
+            <div class="col-md-3">
+                <a href="{{route('entity.export')}}" class="btn btn-primary btn-block" target="_blank">Export to CSV</a>
+            </div>
+            <div class="col-md-3">
+                <a href="{{route('entity.create')}}" class="btn btn-success btn-block">New Entity</a>
             </div>
         </div>
         <div class="row">

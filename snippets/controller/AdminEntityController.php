@@ -7,6 +7,7 @@ use App\Models\Image;
 use Intervention\Image\ImageManager;
 use Carbon\Carbon;
 use App\Models\Entity;
+use Maatwebsite\Excel\Facades\Excel;
 
 class AdminEntityController extends Controller
 {
@@ -198,6 +199,17 @@ class AdminEntityController extends Controller
             'code' => 200,
             'updated_results' => $entitys,
         ]);
+    }
+
+    public function export()
+    {
+        $entitys = Entity::all();
+
+        return Excel::create('entity', function($excel) use ($entitys) {
+            $excel->sheet('entity', function($sheet) use ($entitys) {
+                $sheet->fromModel($entitys);
+            });
+        })->export('xls');
     }
 
     private function addRoutesToEntities($entitys)
