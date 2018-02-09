@@ -11,6 +11,8 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class AdminEntityController extends Controller
 {
+    const pagination = 10;
+
     /**
      * Display a listing of the resource.
      *
@@ -30,7 +32,9 @@ class AdminEntityController extends Controller
             $direction = 'DESC';
         }
 
-        $entitys = Entity::orderBy($order, $direction)->with('image')->paginate(12);
+        $entitys = Entity::orderBy($order, $direction)->with('image')->paginate($this::pagination);
+        $route = route('entity.index') . '?order=' . trim($order) . '&direction=' . trim($direction);
+        $entitys->withPath($route);
 
         $entitys = $this->addRoutesToEntities($entitys);
 
@@ -158,9 +162,9 @@ class AdminEntityController extends Controller
         $query = $request['query'];
 
         if($query != ""){
-            $results = Entity::where('title', 'like', '%' . $query . '%')->paginate(12);
+            $results = Entity::where('title', 'like', '%' . $query . '%')->paginate($this::pagination);
         } else {
-            $results = Entity::latest()->with('image')->paginate(12);
+            $results = Entity::latest()->with('image')->paginate($this::pagination);
         }
 
         $results = collect($results->items());
@@ -204,7 +208,7 @@ class AdminEntityController extends Controller
                 break;
         }
 
-        $entitys = Entity::latest()->with('image')->paginate(12)->items();
+        $entitys = Entity::latest()->with('image')->paginate($this::pagination)->items();
         $entitys = $this->addRoutesToEntities($entitys);
 
         return response()->json([
