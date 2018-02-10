@@ -21,7 +21,11 @@
                     </a>
                 </th>
                 <th scope="col">Description</th>
-                <th scope="col">Date</th>
+                <th scope="col">
+                    <a :href="route_order_date">
+                        Date
+                    </a>
+                </th>
                 <th scope="col">Actions</th>
             </tr>
             </thead>
@@ -79,6 +83,9 @@
                 required: true,
             },
             route_order_title: {
+                required: true,
+            },
+            route_order_date: {
                 required: true,
             },
         },
