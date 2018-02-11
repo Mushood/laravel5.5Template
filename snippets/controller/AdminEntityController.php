@@ -62,6 +62,9 @@ class AdminEntityController extends Controller
     public function store(Request $request)
     {
         $requestEntity = $request->entity;
+
+        $validatedData = $this->requestEntityValidation($request);
+
         if(isset($requestEntity['id'])){
           $entity = Entity::findOrFail($requestEntity['id']);
         } else {
@@ -241,5 +244,15 @@ class AdminEntityController extends Controller
         }
 
         return $entitys;
+    }
+
+    private function requestEntityValidation($request)
+    {
+        $validatedData = $request->validate([
+            'entity.title' => 'required|min:5',
+            'entity.body' => 'required',
+        ]);
+
+        return $validatedData;
     }
 }

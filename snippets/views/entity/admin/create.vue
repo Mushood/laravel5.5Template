@@ -128,6 +128,7 @@
                 entity: {},
                 create_width_form: 6,
                 create_width_preview: 6,
+                server_error:[],
           };
         },
 
@@ -159,14 +160,20 @@
 
                         })
                         .catch(function (error) {
+                            var text = error.response.data.message;
+                            vm.server_error = error.response.data.errors;
+
+                            if(vm.server_error){
+                                text += "<br />" + vm.server_error['entity.title'][0];
+                                //text += "<br />" + vm.server_error['entity.body'][0];
+                            }
+
                             Vue.swal({
                                 title: 'Failure!',
-                                text: error.response.data.message,
+                                html: text,
                                 type: 'warning',
                                 confirmButtonText: "Let's fix it!"
                             });
-
-                            vm.errors = error.response.data;
                         });
                     } else {
                         Vue.swal({
