@@ -174,6 +174,16 @@ class CreateEntity extends Command
                 'directory' => base_path('resources/assets/js/components/' . $this->singularLowerCase ),
                 'destination' => base_path('resources/assets/js/components/' . $this->singularLowerCase . '/list_front.vue')
             ],
+            'factory' => [
+                'source' => base_path('snippets/EntityFactory.php') ,
+                'directory' => base_path('database/factories'),
+                'destination' => base_path('database/factories/' . $this->singularFirstUpper . 'Factory.php')
+            ],
+            'seed' => [
+                'source' => base_path('snippets/EntityTableSeeder.php') ,
+                'directory' => base_path('database/seeds'),
+                'destination' => base_path('database/seeds/' . $this->singularFirstUpper . 'TableSeeder.php')
+            ],
         ];
     }
 
