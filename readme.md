@@ -56,7 +56,6 @@ Example: php artisan create:entity testimonial/testimonials
 You can then configure your pages, migrations and controller actions. If by chance, the boilerplate works for you. You can just run "php artisan migrate" to create your entity table. You then need to include your routes file in your web.php and require your components in your app.js. And you are done.
 
 *** Upcoming Snippets ***
-- Policies
 - Request Validation
 
 *** Even more ***
