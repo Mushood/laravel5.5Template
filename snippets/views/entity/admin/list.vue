@@ -1,16 +1,22 @@
 <template>
     <div>
-        <div class="row" v-if="selections.length > 0">
-            <div class="col-md-4 text-center">
-                <a class="btn btn-primary btn-block" @click.prevent="delete_entitys"><i class="fa fa-trash"></i> <br/>Delete Selected</a>
-            </div>
-            <div class="col-md-4 text-center">
-                <a class="btn btn-primary btn-block" @click.prevent="unpublish_entitys"><i class="fa fa-eye-slash"></i> <br/>Unpublish Selected</a>
-            </div>
-            <div class="col-md- text-center">
-                <a class="btn btn-primary btn-block" @click.prevent="publish_entitys"><i class="fa fa-bullhorn"></i> <br/>Publish Selected</a>
+        <div class="row">
+            <div class="btn-group btn-group-justified" role="group">
+                <div class="btn-group" role="group">
+                    <button class="btn btn-primary" @click.prevent="delete_entitys" v-if="selections.length > 0"><i class="fa fa-trash"></i> <br/>Delete Selected</button>
+                    <button class="btn btn-default" disabled="disabled" v-else><i class="fa fa-trash"></i> <br/>Delete Selected</button>
+                </div>
+                <div class="btn-group" role="group">
+                    <button class="btn btn-primary" @click.prevent="unpublish_entitys" v-if="selections.length > 0"><i class="fa fa-eye-slash"></i> <br/>Unpublish Selected</button>
+                    <button class="btn btn-default" disabled="disabled" v-else><i class="fa fa-eye-slash"></i> <br/>Unpublish Selected</button>
+                </div>
+                <div class="btn-group" role="group">
+                    <button class="btn btn-primary" @click.prevent="publish_entitys" v-if="selections.length > 0"><i class="fa fa-bullhorn"></i> <br/>Publish Selected</button>
+                    <button class="btn btn-default" disabled="disabled" v-else><i class="fa fa-bullhorn"></i> <br/>Publish Selected</button>
+                </div>
             </div>
         </div>
+
         <table class="table table-striped">
             <thead>
             <tr>
