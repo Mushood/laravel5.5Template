@@ -74,7 +74,6 @@ class AdminEntityController extends Controller
         $entity->image_id = $request->pictureId;
         $entity->title = $requestEntity['title'];
         $entity->body = $requestEntity['body'];
-        $entity->order = 0;
         $entity->save();
 
         return response()->json([

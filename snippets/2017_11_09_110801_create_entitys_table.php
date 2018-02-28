@@ -20,7 +20,7 @@ class CreateEntitysTable extends Migration
             $table->string('title');
             $table->text('body');
             $table->string('slug');
-            $table->integer('order');
+            $table->integer('order')->default(0);
             //allows ordering of entity if required
             $table->boolean('active')->default(false);
             //allows setting the entity to active to be able to filter
