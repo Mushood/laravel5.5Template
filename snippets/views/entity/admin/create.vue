@@ -55,10 +55,13 @@
 
                   <hr />
                   <div class="row">
-                      <button type="submit" class="btn btn-primary col-md-2">
+                      <button type="submit" class="btn btn-primary col-md-3" v-if="!in_progress">
                           I like what I see!
                       </button>
-                      <button type="button" class="btn btn-warning col-md-2 col-md-offset-1" @click.prevent="show_preview">
+                      <button type="submit" class="btn btn-danger col-md-3" disabled v-else>
+                          Processing...
+                      </button>
+                      <button type="button" class="btn btn-warning col-md-3 col-md-offset-1" @click.prevent="show_preview">
                           Preview
                       </button>
                   </div>
@@ -121,6 +124,7 @@
                 create_width_form: 12,
                 create_width_preview: '0 hide',
                 server_error:[],
+                in_progress: false,
           };
         },
 
@@ -132,12 +136,13 @@
 
                 this.$validator.validateAll().then((result) => {
                     if (result) {
+                        vm.in_progress = true;
                         axios.post(url, {
                             entity: vm.entity,
                             pictureId: vm.pictureId,
                         })
                         .then(function (response) {
-
+                            vm.in_progress = false;
                             if(response.data.code == 200){
                                 Vue.swal({
                                     title: 'Success!',
@@ -152,6 +157,7 @@
 
                         })
                         .catch(function (error) {
+                            vm.in_progress = false;
                             var text = error.response.data.message;
                             vm.server_error = error.response.data.errors;
 
@@ -168,6 +174,7 @@
                             });
                         });
                     } else {
+                        vm.in_progress = false;
                         Vue.swal({
                             title: 'Failure!',
                             text: 'Please fix form values',
