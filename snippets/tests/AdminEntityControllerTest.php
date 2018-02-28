@@ -5,21 +5,26 @@ namespace Tests\Unit;
 use App\Models\Image;
 use App\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Tests\TestCase;
 use App\Models\Entity;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\UploadedFile;
 
 class AdminEntityControllerTest extends TestCase
 {
+    use WithoutMiddleware;
+
     protected $user;
 
     public function setUp()
     {
         parent::setUp();
 
+        //the admin user from table seeder
         $this->user = User::find(1);
 
         Session::start();
@@ -46,7 +51,7 @@ class AdminEntityControllerTest extends TestCase
     {
         dump("Test Entity Admin Controller Index Running");
 
-        $response = $this->get('/admin/entity');
+        $response = $this->actingAs($this->user)->get('/admin/entity');
         $response->assertStatus(200);
 
         dump("Test Entity Admin Controller Index OKAY");
@@ -61,7 +66,7 @@ class AdminEntityControllerTest extends TestCase
     {
         dump("Test Entity Admin Controller Create Running");
 
-        $response = $this->get('/admin/entity/create');
+        $response = $this->actingAs($this->user)->get('/admin/entity/create');
         $response->assertStatus(200);
 
         dump("Test Entity Admin Controller Create OKAY");
@@ -81,52 +86,57 @@ class AdminEntityControllerTest extends TestCase
         $testImage->alt = 'test';
         $testImage->save();
 
-        //test validation csrf token
-        $response = $this ->actingAs($this->user)
-            ->post('/admin/entity', array(
-
-            ));
-        $response->assertStatus(500);
-
         //test validation title required
         $response = $this ->actingAs($this->user)
             ->post('/admin/entity', array(
-                '_token' => csrf_token(),
-                'entity.body' => 'test',
-                'pictureId' => 1,
+                'entity' => [
+                    'body' => 'test',
+                ],
+                'pictureId' => $testImage->id,
             ));
-        $response->assertStatus(500);
+        $response->assertStatus(302);
+        $response->assertSessionHasErrors([
+            'entity.title',
+        ]);
 
         //test validation body required
         $response = $this ->actingAs($this->user)
             ->post('/admin/entity', array(
-                '_token' => csrf_token(),
-                'entity.title' => 'test',
-                'pictureId' => 1,
+                'entity' => [
+                    'title' => 'testing',
+                ],
+                'pictureId' => $testImage->id,
             ));
-        $response->assertStatus(500);
+        $response->assertStatus(302);
+        $response->assertSessionHasErrors([
+            'entity.body',
+        ]);
 
         //test validation pictureId required
         $response = $this ->actingAs($this->user)
             ->post('/admin/entity', array(
-                '_token' => csrf_token(),
-                'entity.title' => 'test',
-                'entity.body' => 'test',
+                'entity' => [
+                    'title' => 'title',
+                    'body' => 'body',
+                ],
             ));
-        $response->assertStatus(500);
+        $response->assertStatus(302);
+        $response->assertSessionHasErrors([
+            'pictureId',
+        ]);
 
         //test entity save
         $hashTitle = Hash::make('title');
         $hashBody = Hash::make('body');
         $response = $this ->actingAs($this->user)
             ->post('/admin/entity', array(
-                '_token' => csrf_token(),
-                'entity.title' => $hashTitle,
-                'entity.body' => $hashBody,
-                'pictureId' => 1,
+                'entity' => [
+                    'title' => $hashTitle,
+                    'body' => $hashBody,
+                ],
+                'pictureId' => $testImage->id,
             ));
-        $response->assertStatus(200)
-                ->assertJson([
+        $response->assertJson([
                     'code' => 200,
                 ]);
         $this->assertDatabaseHas('entitys', [
@@ -160,23 +170,18 @@ class AdminEntityControllerTest extends TestCase
         $hashBody = Hash::make('body');
         $response = $this ->actingAs($this->user)
             ->post('/admin/entity', array(
-                '_token' => csrf_token(),
-                'entity.id' => $entity->id,
-                'entity.title' => $hashTitle,
-                'entity.body' => $hashBody,
+                'entity' => [
+                    'title' => $hashTitle,
+                    'body' => $hashBody,
+                ],
                 'pictureId' => $testImage->id,
             ));
 
         $this->assertDatabaseHas('entitys', [
             'title' => $hashTitle,
             'body' => $hashBody,
+            'image_id' => $testImage->id,
         ]);
-
-        $updatedEntity = Entity::find($entity->id);
-
-        $this->assertEquals($updatedEntity->title, $hashTitle);
-        $this->assertEquals($updatedEntity->body, $hashBody);
-        $this->assertEquals($updatedEntity->image_id, $testImage->id);
 
         dump("Test Entity Admin Controller Update OKAY");
 
@@ -192,7 +197,7 @@ class AdminEntityControllerTest extends TestCase
         dump("Test Entity Admin Controller Upload Image Running");
         Storage::fake('avatars');
 
-        $response = $this->json('POST', '/admin/entity/image/create', [
+        $response = $this->actingAs($this->user)->json('POST', '/admin/entity/image/create', [
             'avatar' => UploadedFile::fake()->image('avatar.jpg')
         ]);
 
@@ -212,7 +217,7 @@ class AdminEntityControllerTest extends TestCase
 
         $entity = $this->createTestEntity();
 
-        $response = $this->get('/admin/entity/' . $entity->id .'/edit');
+        $response = $this->actingAs($this->user)->get('/admin/entity/' . $entity->id .'/edit');
         $response->assertStatus(200);
 
         dump("Test Entity Admin Controller Edit OKAY");
@@ -234,7 +239,8 @@ class AdminEntityControllerTest extends TestCase
             'deleted_at' => null,
         ]);
 
-        $response = $this->delete('/admin/entity/' . $entity->id );
+        $response = $this->actingAs($this->user)->delete('/admin/entity/' . $entity->id );
+        $response->assertStatus(200);
 
         $this->assertDatabaseMissing('entitys', [
             'id' => $entity->id,
@@ -259,7 +265,7 @@ class AdminEntityControllerTest extends TestCase
             'active' => false,
         ]);
 
-        $response = $this->get('/admin/entity/publish/' . $entity->id );
+        $response = $this->actingAs($this->user)->get('/admin/entity/publish/' . $entity->id );
 
         $this->assertDatabaseHas('entitys', [
             'id' => $entity->id,
@@ -286,7 +292,7 @@ class AdminEntityControllerTest extends TestCase
             'active' => true,
         ]);
 
-        $response = $this->get('/admin/entity/unpublish/' . $entity->id );
+        $response = $this->actingAs($this->user)->get('/admin/entity/unpublish/' . $entity->id );
 
         $this->assertDatabaseHas('entitys', [
             'id' => $entity->id,
@@ -354,10 +360,12 @@ class AdminEntityControllerTest extends TestCase
 
         $this->assertDatabaseMissing('entitys', [
             'id' => $entity1->id,
+            'deleted_at' => null,
         ]);
 
         $this->assertDatabaseMissing('entitys', [
             'id' => $entity2->id,
+            'deleted_at' => null,
         ]);
     }
 
@@ -370,7 +378,7 @@ class AdminEntityControllerTest extends TestCase
     {
         dump("Test Entity Admin Controller export Running");
 
-        $response = $this->get('/admin/entity/export/list');
+        $response = $this->actingAs($this->user)->get('/admin/entity/export/list');
         $response->assertStatus(200);
 
         dump("Test Entity Admin Controller export Okay");
@@ -385,9 +393,8 @@ class AdminEntityControllerTest extends TestCase
 
         $entity = new Entity();
         $entity->title = 'testCase';
-        $entity->description = 'testCase';
+        $entity->body = 'testCase';
         $entity->image_id = $image->id;
-        $entity->active = false;
         $entity->save();
 
         return $entity;
