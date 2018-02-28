@@ -16,7 +16,7 @@ use Illuminate\Http\UploadedFile;
 
 class AdminEntityControllerTest extends TestCase
 {
-    use WithoutMiddleware;
+    //use WithoutMiddleware;
 
     protected $user;
 
@@ -89,6 +89,7 @@ class AdminEntityControllerTest extends TestCase
         //test validation title required
         $response = $this ->actingAs($this->user)
             ->post('/admin/entity', array(
+                '_token'            => csrf_token(),
                 'entity' => [
                     'body' => 'test',
                 ],
@@ -102,6 +103,7 @@ class AdminEntityControllerTest extends TestCase
         //test validation body required
         $response = $this ->actingAs($this->user)
             ->post('/admin/entity', array(
+                '_token'            => csrf_token(),
                 'entity' => [
                     'title' => 'testing',
                 ],
@@ -115,6 +117,7 @@ class AdminEntityControllerTest extends TestCase
         //test validation pictureId required
         $response = $this ->actingAs($this->user)
             ->post('/admin/entity', array(
+                '_token'            => csrf_token(),
                 'entity' => [
                     'title' => 'title',
                     'body' => 'body',
@@ -130,6 +133,7 @@ class AdminEntityControllerTest extends TestCase
         $hashBody = Hash::make('body');
         $response = $this ->actingAs($this->user)
             ->post('/admin/entity', array(
+                '_token'            => csrf_token(),
                 'entity' => [
                     'title' => $hashTitle,
                     'body' => $hashBody,
@@ -170,6 +174,7 @@ class AdminEntityControllerTest extends TestCase
         $hashBody = Hash::make('body');
         $response = $this ->actingAs($this->user)
             ->post('/admin/entity', array(
+                '_token'            => csrf_token(),
                 'entity' => [
                     'title' => $hashTitle,
                     'body' => $hashBody,
@@ -239,7 +244,7 @@ class AdminEntityControllerTest extends TestCase
             'deleted_at' => null,
         ]);
 
-        $response = $this->actingAs($this->user)->delete('/admin/entity/' . $entity->id );
+        $response = $this->actingAs($this->user)->call('DELETE','/admin/entity/' . $entity->id, ['_token' => csrf_token()]);
         $response->assertStatus(200);
 
         $this->assertDatabaseMissing('entitys', [
