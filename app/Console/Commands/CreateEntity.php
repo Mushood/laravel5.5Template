@@ -184,6 +184,11 @@ class CreateEntity extends Command
                 'directory' => base_path('database/seeds'),
                 'destination' => base_path('database/seeds/' . $this->singularFirstUpper . 'TableSeeder.php')
             ],
+            'test' => [
+                'source' => base_path('snippets/tests/AdminEntityControllerTest.php') ,
+                'directory' => base_path('tests/Unit'),
+                'destination' => base_path('tests/Unit/Admin' . $this->singularFirstUpper . 'ControllerTest.php')
+            ],
         ];
     }
 
