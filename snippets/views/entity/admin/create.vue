@@ -1,27 +1,16 @@
 <template>
     <div class="page_wrapper">
         <div class="row">
-            <div class="btn-group btn-group-justified" role="group">
-                <div class="btn-group" role="group">
-                    <button class="btn btn-primary" @click="show_form" v-if="create_width_form == 12">Show Form only</button>
-                    <button class="btn btn-warning" @click="show_form" v-else>Show Form only</button>
-                </div>
-                <div class="btn-group" role="group">
-                    <button class="btn btn-primary" @click="show_preview" v-if="create_width_preview == 12">Show Preview only</button>
-                    <button class="btn btn-warning" @click="show_preview" v-else>Show Preview only</button>
-                </div>
-                <div class="btn-group" role="group">
-                    <button class="btn btn-primary" @click="show_side" v-if="create_width_preview == 6">Side by side</button>
-                    <button class="btn btn-warning" @click="show_side" v-else>Side by side</button>
-                </div>
-            </div>
-        </div>
-        <div class="row">
             <div :class="'col-md-' + create_width_preview">
                 <h1>Preview Entity</h1>
                 <h3 v-if="entity.title">{{entity.title}}</h3>
                 <p v-if="entity.body" v-html="entity.body"></p>
                 <img :src="route_image + '/' + picture" class="img-responsive col-md-10" alt="image" v-if="picture"/>
+                <div class="row">
+                    <button type="button" class="btn btn-warning col-md-3" @click.prevent="show_form">
+                        Continue Editing
+                    </button>
+                </div>
             </div>
             <div :class="'col-md-' + create_width_form">
                   <h1>Write Entity</h1>
@@ -66,8 +55,11 @@
 
                   <hr />
                   <div class="row">
-                      <button type="submit" class="btn btn-primary">
+                      <button type="submit" class="btn btn-primary col-md-2">
                           I like what I see!
+                      </button>
+                      <button type="button" class="btn btn-warning col-md-2 col-md-offset-1" @click.prevent="show_preview">
+                          Preview
                       </button>
                   </div>
                 </form>
@@ -126,8 +118,8 @@
                 picture: "",
                 pictureId: "",
                 entity: {},
-                create_width_form: 6,
-                create_width_preview: 6,
+                create_width_form: 12,
+                create_width_preview: '0 hide',
                 server_error:[],
           };
         },
