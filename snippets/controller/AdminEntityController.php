@@ -228,7 +228,7 @@ class AdminEntityController extends Controller
             $excel->sheet('entity', function($sheet) use ($entitys) {
                 $sheet->fromModel($entitys);
             });
-        })->export('xls');
+        })->export('csv');
     }
 
     private function addRoutesToEntities($entitys)
@@ -251,6 +251,7 @@ class AdminEntityController extends Controller
         $validatedData = $request->validate([
             'entity.title' => 'required|min:5',
             'entity.body' => 'required',
+            'pictureId' => 'required',
         ]);
 
         return $validatedData;
