@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Image;
+use Illuminate\Support\Facades\Storage;
 use Intervention\Image\ImageManager;
 use Carbon\Carbon;
 use App\Models\Entity;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Library\InterventionWrapperImage;
 
 class AdminEntityController extends Controller
 {
@@ -85,22 +87,23 @@ class AdminEntityController extends Controller
     {
         $images = $request->file('items');
         foreach ($images as $key => $image) {
-          if ($image == null )
-          {
-            return response()->json([
-              'error' => true
-            ]);
-          }
-          $filename =  Carbon::now()->timestamp . '_' . ($image->getClientOriginalName());
-          $path = public_path('images/entitys/' . $filename);
+            if ($image == null )
+            {
+                return response()->json([
+                    'error' => true
+                ]);
+            }
+            $filename =  Carbon::now()->timestamp . '_' . ($image->getClientOriginalName());
 
-          $manager = new ImageManager();
-          $savedImage= $manager->make($image->getRealPath())->resize(1200, 800)->save($path);
+            $manager = new ImageManager();
+            $savedImage = $manager->make($image->getRealPath())->resize(1200, 800);
+            $savedImage = new InterventionWrapperImage($savedImage);
+            Storage::disk('public')->putFileAs('avatars', $savedImage, $filename);
 
-          $uploadedImage = new Image();
-          $uploadedImage->name = $filename;
-          $uploadedImage->alt = $filename;
-          $uploadedImage->save();
+            $uploadedImage = new Image();
+            $uploadedImage->name = $filename;
+            $uploadedImage->alt = $filename;
+            $uploadedImage->save();
         }
 
 
