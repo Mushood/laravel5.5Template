@@ -205,7 +205,7 @@ class AdminEntityControllerTest extends TestCase
             ->post('/admin/testimonial/image/create', array(
                 '_token'            => csrf_token(),
                 'items' => [
-                    UploadedFile::fake()->image('avatar.jpg'),
+                    UploadedFile::fake()->image('testing.jpg'),
                 ]
             ));
         $response->assertJsonStructure([
