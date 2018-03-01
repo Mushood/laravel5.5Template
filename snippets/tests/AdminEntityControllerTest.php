@@ -200,14 +200,19 @@ class AdminEntityControllerTest extends TestCase
     public function testUploadImage()
     {
         dump("Test Entity Admin Controller Upload Image Running");
-        Storage::fake('avatars');
 
-        $response = $this->actingAs($this->user)->json('POST', '/admin/entity/image/create', [
-            'avatar' => UploadedFile::fake()->image('avatar.jpg')
+        $response = $this ->actingAs($this->user)
+            ->post('/admin/testimonial/image/create', array(
+                '_token'            => csrf_token(),
+                'items' => [
+                    UploadedFile::fake()->image('avatar.jpg'),
+                ]
+            ));
+        $response->assertJsonStructure([
+            'error', 'id', 'filename'
         ]);
-
-        // Assert the file was stored...
-        Storage::disk('avatars')->assertExists('avatar.jpg');
+        $file = $response->original['filename'];
+        Storage::disk('public')->assertExists('/entitys/'. $file);
 
     }
 
