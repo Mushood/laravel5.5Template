@@ -5,13 +5,12 @@ namespace App\Models;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Storage;
 
 class Entity extends Model
 {
     use SoftDeletes;
     use Sluggable;
-
-    CONST routeImages = '/images/entitys';
 
     protected $dates = ['deleted_at'];
 
@@ -34,5 +33,10 @@ class Entity extends Model
                 'source' => 'title'
             ]
         ];
+    }
+
+    public static function routeImagePath()
+    {
+        return Storage::disk('public')->url('/entitys');
     }
 }

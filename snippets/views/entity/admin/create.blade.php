@@ -22,7 +22,7 @@
 
   @if($entity == null)
     <entitystudio
-            route_image="{{url(\App\Models\Entity::routeImages)}}"
+            route_image="{{url(\App\Models\Entity::routeImagePath())}}"
             route_image_create="{{route('entity.image.upload')}}"
             route_entity_submit="{{route('entity.store')}}"
     ></entitystudio>
@@ -30,7 +30,7 @@
     <entitystudio
             edit="{{$entity->id}}"
             :original="{{$entity}}"
-            route_image="{{url(\App\Models\Entity::routeImages)}}"
+            route_image="{{url(\App\Models\Entity::routeImagePath())}}"
             route_image_create="{{route('entity.image.upload')}}"
             route_entity_submit="{{route('entity.store')}}"
     ></entitystudio>

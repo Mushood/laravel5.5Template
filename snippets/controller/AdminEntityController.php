@@ -98,7 +98,7 @@ class AdminEntityController extends Controller
             $manager = new ImageManager();
             $savedImage = $manager->make($image->getRealPath())->resize(1200, 800);
             $savedImage = new InterventionWrapperImage($savedImage);
-            Storage::disk('public')->putFileAs('avatars', $savedImage, $filename);
+            Storage::disk('public')->putFileAs('entitys', $savedImage, $filename);
 
             $uploadedImage = new Image();
             $uploadedImage->name = $filename;
