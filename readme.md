@@ -84,6 +84,8 @@ Improvements to this package
 11. SEO module functionality
 12. Page creation for static content
 13. Refactor tests
+14. Switch to a more API oriented Back
+15. Add API metadata
 
 ----
 Future plans
