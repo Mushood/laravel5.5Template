@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use App\Models\Entity;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Library\InterventionWrapperImage;
+use App\Traits\Publishable;
 
 /**
  * Class AdminEntityController
@@ -19,6 +20,8 @@ use App\Library\InterventionWrapperImage;
 
 class AdminEntityController extends Controller
 {
+    use Publishable;
+
     const PAGINATION = 10;
 
     /**
@@ -40,11 +43,11 @@ class AdminEntityController extends Controller
             $direction = $request->direction;
         }
 
-        $entitys    = Entity::orderBy($order, $direction)
+        $entitys = Entity::orderBy($order, $direction)
                             ->with('image')
                             ->paginate($this::pagination);
 
-        $route      = route('entity.index') .
+        $route = route('entity.index') .
                         '?order=' . trim($order) .
                         '&direction=' . trim($direction);
 
@@ -82,16 +85,12 @@ class AdminEntityController extends Controller
 
         if (isset($requestEntity['id'])) {
             $entity = Entity::findOrFail($requestEntity['id']);
+            $entity->update($validatedData);
         }
 
         if (!isset($requestEntity['id'])) {
-            $entity = new Entity();
+            $entity = Entity::create($validatedData);
         }
-
-        $entity->image_id = $request->pictureId;
-        $entity->title = $requestEntity['title'];
-        $entity->body = $requestEntity['body'];
-        $entity->save();
 
         return response()->json(
             [
@@ -173,44 +172,6 @@ class AdminEntityController extends Controller
         return response()->json(
             [
             'code' => 200,
-            ]
-        );
-    }
-
-    /**
-     * Set entity to active
-     *
-     * @param Entity $entity Route Model Binding
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function publish(Entity $entity)
-    {
-        $entity->active = true;
-        $entity->save();
-
-        return response()->json(
-            [
-            'code' => 200,
-            ]
-        );
-    }
-
-    /**
-     * Set entity to active
-     *
-     * @param Entity $entity Route Model Binding
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function unpublish(Entity $entity)
-    {
-        $entity->active = false;
-        $entity->save();
-
-        return response()->json(
-            [
-            'code' => 200
             ]
         );
     }
