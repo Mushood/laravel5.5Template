@@ -2,14 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Traits\Media;
 use Illuminate\Http\Request;
-use App\Models\Image;
-use Illuminate\Support\Facades\Storage;
-use Intervention\Image\ImageManager;
 use Carbon\Carbon;
 use App\Models\Entity;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Library\InterventionWrapperImage;
 use App\Traits\Publishable;
 
 /**
@@ -18,14 +15,10 @@ use App\Traits\Publishable;
  * @package App\Http\Controllers
  */
 
-class AdminEntityController extends Controller
+class AdminEntityController extends BaseController
 {
     use Publishable;
-
-    const PAGINATION = 10;
-    const EAGER_LOAD = [
-        'image'
-    ];
+    use Media;
 
     /**
      * Display a listing of the resource.
@@ -47,8 +40,8 @@ class AdminEntityController extends Controller
         }
 
         $entitys = Entity::orderBy($order, $direction)
-                            ->with(self::EAGER_LOAD)
-                            ->paginate($this::pagination);
+                            ->with($this->getEagerLoad())
+                            ->paginate($this->getPagination());
 
         $route = route('entity.index') .
                         '?order=' . trim($order) .
@@ -168,7 +161,7 @@ class AdminEntityController extends Controller
             $results = Entity::where('title', 'like', '%' . $query . '%');
         }
 
-        $results = $results->with(self::EAGER_LOAD)->paginate($this::pagination);
+        $results = $results->with($this->getEagerLoad())->paginate($this->getPagination());
 
         $results = collect($results->items());
         $results = $this->_addRoutesToEntities($results);
@@ -221,8 +214,8 @@ class AdminEntityController extends Controller
         }
 
         $entitys = Entity::latest()
-                        ->with(self::EAGER_LOAD)
-                        ->paginate($this::pagination)
+                        ->with($this->getEagerLoad())
+                        ->paginate($this->getPagination())
                         ->items();
 
         $entitys = $this->_addRoutesToEntities($entitys);

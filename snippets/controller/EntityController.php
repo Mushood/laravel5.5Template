@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Image;
 use App\Models\Entity;
 
-class EntityController extends Controller
+class EntityController extends BaseController
 {
     /**
      * Display a listing of the resource.
