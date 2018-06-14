@@ -86,6 +86,9 @@ Improvements to this package
 13. Refactor tests
 14. Switch to a more API oriented Back
 15. Add API metadata
+16. Include appropriate http code
+17. Use Scope
+18. Improve media trait
 
 ----
 Future plans
