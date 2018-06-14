@@ -15,7 +15,7 @@ class EntityController extends Controller
      */
     public function index()
     {
-      $entitys = Entity::latest()->where('active',true)->with('image')->paginate(12);
+      $entitys = Entity::latest()->active()->with('image')->paginate(12);
 
       return view('entity.index', compact('entitys'));
     }

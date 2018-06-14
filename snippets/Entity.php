@@ -39,4 +39,16 @@ class Entity extends Model
     {
         return Storage::disk('public')->url('/entitys');
     }
+
+    /**
+     * Scope a query to only include active.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeActive($query)
+    {
+        return $query->where('active', 1);
+    }
 }
