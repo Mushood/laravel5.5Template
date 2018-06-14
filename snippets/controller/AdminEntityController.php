@@ -7,7 +7,6 @@ use App\Traits\Media;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Models\Entity;
-use Maatwebsite\Excel\Facades\Excel;
 use App\Traits\Publishable;
 
 /**

@@ -2,6 +2,8 @@
 
 namespace App\Traits;
 
+use Maatwebsite\Excel\Facades\Excel;
+
 trait Exportable
 {
 
@@ -46,5 +48,6 @@ trait Exportable
                     $rowNo++;
                 }
             });
+        });
     }
 }
