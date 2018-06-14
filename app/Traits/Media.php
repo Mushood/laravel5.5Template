@@ -40,9 +40,8 @@ trait Media
 
 
         return [
-                'id' => $uploadedFile->id,
-                'filename' => $filename
-            ]
-        );
+            'id' => $uploadedFile->id,
+            'filename' => $filename
+        ];
     }
 }
