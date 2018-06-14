@@ -109,37 +109,10 @@ class AdminEntityController extends Controller
     public function uploadImage(Request $request)
     {
         $images = $request->file('items');
-        foreach ($images as $key => $image) {
-            if ($image == null ) {
-                return response()->json(
-                    [
-                    'error' => true
-                    ]
-                );
-            }
-
-            $originalName   = $image->getClientOriginalName();
-            $filename       =  Carbon::now()->timestamp . '_' . $originalName;
-
-            $manager = new ImageManager();
-            $savedImage = $manager->make($image->getRealPath())->resize(1200, 800);
-            $savedImage = new InterventionWrapperImage($savedImage);
-            Storage::disk('public')->putFileAs('entitys', $savedImage, $filename);
-
-            $uploadedImage = new Image();
-            $uploadedImage->name = $filename;
-            $uploadedImage->alt = $filename;
-            $uploadedImage->save();
-        }
+        $uploadedImage = $this->multipleUpload($images, 'public', 'entitys');
 
 
-        return response()->json(
-            [
-            'error' => false,
-            'id' => $uploadedImage->id,
-            'filename' => $filename
-            ]
-        );
+        return response()->json($uploadedImage);
     }
 
     /**
