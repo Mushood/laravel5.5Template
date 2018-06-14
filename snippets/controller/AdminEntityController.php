@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Traits\Exportable;
 use App\Traits\Media;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -18,6 +19,7 @@ use App\Traits\Publishable;
 class AdminEntityController extends BaseController
 {
     use Publishable;
+    use Exportable;
     use Media;
 
     /**
@@ -237,15 +239,7 @@ class AdminEntityController extends BaseController
     {
         $entitys = Entity::all();
 
-        return Excel::create(
-            'entity', function ($excel) use ($entitys) {
-                $excel->sheet(
-                    'entity', function ($sheet) use ($entitys) {
-                        $sheet->fromModel($entitys);
-                    }
-                );
-            }
-        )->export('csv');
+        return $this->exportToCSVFromModel($entitys);
     }
 
     /**
@@ -288,5 +282,12 @@ class AdminEntityController extends BaseController
         );
 
         return $validatedData;
+    }
+
+    private function _getExportMappings()
+    {
+        return [
+            'headerName' => 'databaseColumnName',
+        ];
     }
 }
