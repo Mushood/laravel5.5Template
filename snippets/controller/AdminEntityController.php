@@ -11,34 +11,46 @@ use App\Models\Entity;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Library\InterventionWrapperImage;
 
+/**
+ * Class AdminEntityController
+ *
+ * @package App\Http\Controllers
+ */
+
 class AdminEntityController extends Controller
 {
-    const pagination = 10;
+    const PAGINATION = 10;
 
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param Request $request Illuminate\Http\Request
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index(Request $request)
     {
-        if(isset($request->order)){
+        $order = 'created_at';
+        if (isset($request->order)) {
             $order = $request->order;
-        } else {
-            $order = 'created_at';
         }
 
-        if(isset($request->order)){
+        $direction = 'DESC';
+        if (isset($request->order)) {
             $direction = $request->direction;
-        } else {
-            $direction = 'DESC';
         }
 
-        $entitys = Entity::orderBy($order, $direction)->with('image')->paginate($this::pagination);
-        $route = route('entity.index') . '?order=' . trim($order) . '&direction=' . trim($direction);
+        $entitys    = Entity::orderBy($order, $direction)
+                            ->with('image')
+                            ->paginate($this::pagination);
+
+        $route      = route('entity.index') .
+                        '?order=' . trim($order) .
+                        '&direction=' . trim($direction);
+
         $entitys->withPath($route);
 
-        $entitys = $this->addRoutesToEntities($entitys);
+        $entitys = $this->_addRoutesToEntities($entitys);
 
         return view('admin.entity.index', compact('entitys'));
     }
@@ -58,19 +70,22 @@ class AdminEntityController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request Illuminate\Http\Request
+     *
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request)
     {
         $requestEntity = $request->entity;
 
-        $validatedData = $this->requestEntityValidation($request);
+        $validatedData = $this->_requestEntityValidation($request);
 
-        if(isset($requestEntity['id'])){
-          $entity = Entity::findOrFail($requestEntity['id']);
-        } else {
-          $entity = new Entity();
+        if (isset($requestEntity['id'])) {
+            $entity = Entity::findOrFail($requestEntity['id']);
+        }
+
+        if (!isset($requestEntity['id'])) {
+            $entity = new Entity();
         }
 
         $entity->image_id = $request->pictureId;
@@ -78,22 +93,34 @@ class AdminEntityController extends Controller
         $entity->body = $requestEntity['body'];
         $entity->save();
 
-        return response()->json([
+        return response()->json(
+            [
             'code' => 200,
-        ]);
+            ]
+        );
     }
 
+    /**
+     * Upload a new image
+     *
+     * @param Request $request Illuminate\Http\Request
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function uploadImage(Request $request)
     {
         $images = $request->file('items');
         foreach ($images as $key => $image) {
-            if ($image == null )
-            {
-                return response()->json([
+            if ($image == null ) {
+                return response()->json(
+                    [
                     'error' => true
-                ]);
+                    ]
+                );
             }
-            $filename =  Carbon::now()->timestamp . '_' . ($image->getClientOriginalName());
+
+            $originalName   = $image->getClientOriginalName();
+            $filename       =  Carbon::now()->timestamp . '_' . $originalName;
 
             $manager = new ImageManager();
             $savedImage = $manager->make($image->getRealPath())->resize(1200, 800);
@@ -107,18 +134,21 @@ class AdminEntityController extends Controller
         }
 
 
-        return response()->json([
-          'error' => false,
-          'id' => $uploadedImage->id,
-          'filename' => $filename
-        ]);
+        return response()->json(
+            [
+            'error' => false,
+            'id' => $uploadedImage->id,
+            'filename' => $filename
+            ]
+        );
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Entity $entity Route Model Binding
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function edit(Entity $entity)
     {
@@ -130,57 +160,97 @@ class AdminEntityController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Entity $entity Route Model Binding
+     *
+     * @return \Illuminate\Http\JsonResponse
+     *
+     * @throws \Exception
      */
     public function destroy(Entity $entity)
     {
         $entity->delete();
 
-        return response()->json([
+        return response()->json(
+            [
             'code' => 200,
-        ]);
+            ]
+        );
     }
 
+    /**
+     * Set entity to active
+     *
+     * @param Entity $entity Route Model Binding
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function publish(Entity $entity)
     {
         $entity->active = true;
         $entity->save();
 
-        return response()->json([
+        return response()->json(
+            [
             'code' => 200,
-        ]);
+            ]
+        );
     }
 
+    /**
+     * Set entity to active
+     *
+     * @param Entity $entity Route Model Binding
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function unpublish(Entity $entity)
     {
         $entity->active = false;
         $entity->save();
 
-        return response()->json([
+        return response()->json(
+            [
             'code' => 200
-        ]);
+            ]
+        );
     }
 
+    /**
+     * Filter items by search
+     *
+     * @param Request $request Illuminate\Http\Request
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function search(Request $request)
     {
         $query = $request['query'];
 
-        if($query != ""){
-            $results = Entity::where('title', 'like', '%' . $query . '%')->paginate($this::pagination);
-        } else {
-            $results = Entity::latest()->with('image')->paginate($this::pagination);
+        $results = Entity::latest();
+        if ($query != "") {
+            $results = Entity::where('title', 'like', '%' . $query . '%');
         }
 
-        $results = collect($results->items());
-        $results = $this->addRoutesToEntities($results);
+        $results = $results->with('image')->paginate($this::pagination);
 
-        return response()->json([
+        $results = collect($results->items());
+        $results = $this->_addRoutesToEntities($results);
+
+        return response()->json(
+            [
             'code' => 200,
             'results' => $results,
-        ]);
+            ]
+        );
     }
 
+    /**
+     * Apply actions to multiple units
+     *
+     * @param Request $request Illuminate\Http\Request
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function bulkAction(Request $request)
     {
         $action = $request['action'];
@@ -189,53 +259,75 @@ class AdminEntityController extends Controller
         $entitys = Entity::whereIn('id', $selections)->get();
 
         switch($action){
-            CASE 'unpublish':
-                foreach ($entitys as $entity){
-                    $entity->active = false;
-                    $entity->save();
-                }
-                break;
+        CASE 'unpublish':
+            foreach ($entitys as $entity) {
+                $entity->active = false;
+                $entity->save();
+            }
+            break;
 
-            CASE 'publish':
-                foreach ($entitys as $entity){
-                    $entity->active = true;
-                    $entity->save();
-                }
-                break;
+        CASE 'publish':
+            foreach ($entitys as $entity) {
+                $entity->active = true;
+                $entity->save();
+            }
+            break;
 
-            CASE 'delete':
-                foreach ($entitys as $entity){
-                    $entity->delete();
-                }
-                break;
+        CASE 'delete':
+            foreach ($entitys as $entity) {
+                $entity->delete();
+            }
+            break;
 
-            default:
-                break;
+        default:
+            break;
         }
 
-        $entitys = Entity::latest()->with('image')->paginate($this::pagination)->items();
-        $entitys = $this->addRoutesToEntities($entitys);
+        $entitys = Entity::latest()
+                        ->with('image')
+                        ->paginate($this::pagination)
+                        ->items();
 
-        return response()->json([
+        $entitys = $this->_addRoutesToEntities($entitys);
+
+        return response()->json(
+            [
             'code' => 200,
             'updated_results' => $entitys,
-        ]);
+            ]
+        );
     }
 
+    /**
+     * Export entity to csv file
+     *
+     * @return mixed
+     */
     public function export()
     {
         $entitys = Entity::all();
 
-        return Excel::create('entity', function($excel) use ($entitys) {
-            $excel->sheet('entity', function($sheet) use ($entitys) {
-                $sheet->fromModel($entitys);
-            });
-        })->export('csv');
+        return Excel::create(
+            'entity', function ($excel) use ($entitys) {
+                $excel->sheet(
+                    'entity', function ($sheet) use ($entitys) {
+                        $sheet->fromModel($entitys);
+                    }
+                );
+            }
+        )->export('csv');
     }
 
-    private function addRoutesToEntities($entitys)
+    /**
+     * Add routes to entity for front querying
+     *
+     * @param $entitys Entity
+     *
+     * @return mixed
+     */
+    private function _addRoutesToEntities($entitys)
     {
-        foreach($entitys as $entity){
+        foreach ($entitys as $entity) {
             $entity->route = [
                 'show' => route('entity.show', ['entity' => $entity->id]),
                 'edit' => route('entity.edit', ['entity' => $entity->id]),
@@ -248,13 +340,22 @@ class AdminEntityController extends Controller
         return $entitys;
     }
 
-    private function requestEntityValidation($request)
+    /**
+     * Validate data
+     *
+     * @param $request Request
+     *
+     * @return mixed
+     */
+    private function _requestEntityValidation($request)
     {
-        $validatedData = $request->validate([
+        $validatedData = $request->validate(
+            [
             'entity.title' => 'required|min:5',
             'entity.body' => 'required',
             'pictureId' => 'required',
-        ]);
+            ]
+        );
 
         return $validatedData;
     }
