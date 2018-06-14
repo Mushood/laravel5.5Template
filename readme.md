@@ -43,7 +43,7 @@ When working on a project, I often have the same code repeated for my entities. 
 
 In order to generate the list of above snippets, you need to run the following command: "php artisan create:entity entitySingular/entityPlural". You can also just include the singular version and for the plural an 's' would be appended.
 
-Example: php artisan create:entity testimonial/testimonials
+Example: php artisan create:entity testimonial/testimonials OR php artisan create:entity testimonial
 - AdminTestimonialController
 - TestimonialController
 - Testimonial
@@ -52,6 +52,7 @@ Example: php artisan create:entity testimonial/testimonials
 - Testimonial VueJS: list, create, show
 - Testimonial routes
 - testimonials folder for images in public/images/testimonials
+- AdminTestimonialControllerTest
 
 You can then configure your pages, migrations and controller actions. If by chance, the boilerplate works for you. You can just run "php artisan migrate" to create your entity table. You then need to include your routes file in your web.php and require your components in your app.js. And you are done.
 
@@ -65,3 +66,26 @@ You can then configure your pages, migrations and controller actions. If by chan
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+
+----
+Improvements to this package
+
+1. Make CRUD more eloquent oriented
+2. Have a media dedicated controller
+3. Fix dynamic pagination 
+4. Allow orderable function
+5. Extract publishable to a trait
+6. Add phpdocs
+7. Use php-cs fixer
+8. Extract a base controller to include generic methods
+9. Validation rules and messages to Request object
+10. Steamline front js validation and back validation
+11. SEO module functionality
+12. Page creation for static content
+13. Refactor tests
+
+----
+Future plans
+
+1. Convert into a composer package
