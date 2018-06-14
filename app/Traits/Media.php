@@ -27,9 +27,9 @@ trait Media
             $originalName   = $file->getClientOriginalName();
             $filename       =  Carbon::now()->timestamp . '_' . $originalName;
 
-            $manager = new ImageManager();
-            $savedFile = $manager->make($file->getRealPath())->resize(1200, 800);
-            $savedFile = new InterventionWrapperImage($savedFile);
+            $manager    = new ImageManager();
+            $savedFile  = $manager->make($file->getRealPath())->resize(1200, 800);
+            $savedFile  = new InterventionWrapperImage($savedFile);
             Storage::disk($disk)->putFileAs($folder, $savedFile, $filename);
 
             $uploadedFile = new Image();
