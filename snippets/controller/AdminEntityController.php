@@ -23,6 +23,9 @@ class AdminEntityController extends Controller
     use Publishable;
 
     const PAGINATION = 10;
+    const EAGER_LOAD = [
+        'image'
+    ];
 
     /**
      * Display a listing of the resource.
@@ -44,7 +47,7 @@ class AdminEntityController extends Controller
         }
 
         $entitys = Entity::orderBy($order, $direction)
-                            ->with('image')
+                            ->with(self::EAGER_LOAD)
                             ->paginate($this::pagination);
 
         $route = route('entity.index') .
@@ -165,7 +168,7 @@ class AdminEntityController extends Controller
             $results = Entity::where('title', 'like', '%' . $query . '%');
         }
 
-        $results = $results->with('image')->paginate($this::pagination);
+        $results = $results->with(self::EAGER_LOAD)->paginate($this::pagination);
 
         $results = collect($results->items());
         $results = $this->_addRoutesToEntities($results);
@@ -218,7 +221,7 @@ class AdminEntityController extends Controller
         }
 
         $entitys = Entity::latest()
-                        ->with('image')
+                        ->with(self::EAGER_LOAD)
                         ->paginate($this::pagination)
                         ->items();
 
